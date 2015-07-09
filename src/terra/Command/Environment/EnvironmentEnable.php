@@ -87,9 +87,10 @@ class EnvironmentEnable extends Command
     $environment_factory = new EnvironmentFactory($environment, $app);
     $output->writeln($environment_factory->enable());
 
+    $ip = $environment_factory->getIp();
     $port = $environment_factory->getPort();
 
-    $app['environments'][$environment_name]['url'] = "http://localhost:$port";
+    $app['environments'][$environment_name]['url'] = "http://$ip:$port";
     $this->getApplication()->getTerra()->getConfig()->add('apps', $app_name, $app);
 
     if ($this->getApplication()->getTerra()->getConfig()->save()) {

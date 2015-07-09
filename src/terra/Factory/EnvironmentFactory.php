@@ -376,8 +376,25 @@ class EnvironmentFactory {
     }
   }
 
+
   /**
-   * Get's the exposed port of the load balancer container.
+   * Gets the correct IP address to reference for Docker
+   * @return string|mixed
+   */
+  public function getIp() {
+    $default_url = "localhost"; // default to localhost
+
+    $process = new Process('docker-machine ip $(docker-machine active)');
+    $process->run();
+    if (!$process->isSuccessful()) {
+      return $default_url;
+    }
+
+    return trim($process->getOutput());
+  }
+
+  /**
+   * Gets the exposed port of the load balancer container.
    * @return bool|mixed
    */
   public function getPort() {
@@ -453,9 +470,9 @@ class EnvironmentFactory {
 
       $factory = new EnvironmentFactory($environment, $this->app);
       $drush_alias_file[] = "\$aliases['{$environment_name}'] = array(";
-      $drush_alias_file[] = "  'uri' => 'localhost:{$factory->getPort()}',";
+      $drush_alias_file[] = "  'uri' => '{$factory->getIp()}:{$factory->getPort()}',";
       $drush_alias_file[] = "  'root' => '/var/www/html',";
-      $drush_alias_file[] = "  'remote-host' => 'localhost',";
+      $drush_alias_file[] = "  'remote-host' => '{$factory->getIp()}',";
       $drush_alias_file[] = "  'remote-user' => 'root',";
       $drush_alias_file[] = "  'ssh-options' => '-p {$factory->getDrushPort()}',";
       $drush_alias_file[] = ");";
