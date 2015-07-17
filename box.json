@@ -1,0 +1,21 @@
+{
+    "alias": "terra.phar",
+    "chmod": "0755",
+    "directories": [
+        "src"
+    ],
+    "files": [
+        "bin/terra",
+        "vendor/autoload.php"
+    ],
+    "finder": [
+        {
+            "name": "/(\\.php|\\.json|\\.yml|\\.twig)$/",
+            "exclude": ["Tests","tests", "docs"],
+            "in": "vendor"
+        }
+    ],
+    "main": "bin/terra",
+    "output": "terra.phar",
+    "stub": true
+}

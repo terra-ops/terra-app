@@ -1,8 +1,10 @@
 # Installation
 
-It is recommended to install Terra globally.
+Currently there are a few steps to get terra working.  We want installation to be as fast and simple as possible, so we will be working on a single install script that sets up all of the prerequisites. 
 
 ## Prerequisites
+
+Terra depends on the following tools.  The instructions below will guide you through setting up all of them.
 
 - PHP
 - git
@@ -10,44 +12,92 @@ It is recommended to install Terra globally.
 - Docker [http://docker.com](http://docker.com)
 - Docker Compose [https://docs.docker.com/compose](https://docs.docker.com/compose)
 
+## Ubuntu 
 
-### Installing PHP & git
+Terra recommends Ubuntu Trusty (14.04 or higher).
 
-**Ubuntu:**
+Run all of the following commands as root, or with `sudo`.
 
-    apt-get install php5-cli git
+1. Install PHP & Git:
 
+        apt-get update
+        apt-get install php5-cli git
 
-**OSX:**
+2. Install Composer:  
+  
+  From https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx
+  
+        curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-- Install the command line developer tools by installing XCode
+  This will install the composer.phar file at /usr/local/bin/composer.
+  
+3. Install Docker:
 
-**Windows:**
+  From https://docs.docker.com/installation/ubuntulinux
 
-- `//TODO`
+        wget -qO- https://get.docker.com/ | sh
+        
+4. Add your user to the `docker` group:
 
+        usermod -aG docker your-user
 
-### Installing Composer
+  The docker installer will remind you of this at the end.
 
-**Ubuntu/OSX:**
+5. Install Docker Compose:
 
-    curl -sS https://getcomposer.org/installer | php
-    mv composer.phar /usr/local/bin/composer
-    ln -s /usr/local/bin/composer /usr/bin/composer
+  From https://docs.docker.com/compose/install/
+  
+        curl -L https://github.com/docker/compose/releases/download/1.2.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+        chmod +x /usr/local/bin/docker-compose
 
+6. Install Drush:
 
-**Windows:**
+  Drush is used to connect to your running drupal sites.  This step is not required.
 
-- [https://getcomposer.org/doc/00-intro.md#installation-windows](https://getcomposer.org/doc/00-intro.md#installation-windows)
+  From http://docs.drush.org/en/master/install/
+  
+        git clone https://github.com/drush-ops/drush.git /usr/share/drush --branch=7.x
+        cd /usr/share/drush
+        composer install
+        ln -s /usr/share/drush/drush /usr/local/bin/drush
 
+6. Install Terra:
 
-### Installing Docker
+  Currently, the `composer global-install` method is not working. See https://github.com/terra-ops/terra-app/issues/25
+  
+  To install terra manually:
+  
+        git clone https://github.com/terra-ops/terra-app.git /usr/share/terra
+        cd /usr/share/terra
+        composer install
+        ln -s /usr/share/terra/bin/terra /usr/local/bin/terra
 
-**Ubuntu:**
+7. Generate an SSH key:
 
-  [https://docs.docker.com/installation/ubuntulinux](https://docs.docker.com/installation/ubuntulinux/)
+  To connect to your drupal sites via drush, your terra user must have an SSH public key.
+  
+  To generate one:
+  
+         ssh-keygen -t rsa -N "" -f ~/.ssh/id_rsa
+  
 
-**OSX/Windows:**
+7. Switch back to your user and run `terra` to see if it works!
+        
+## OSX
+
+Running docker in OSx requires a slightly different setup.
+
+1. Install PHP & Git:
+
+  Install the command line developer tools by installing XCode
+
+2. Install composer:
+
+  From https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx
+  
+        curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+3. Install docker & docker-compose:
 
   The easiest way to get up and running on OSX with Docker is to use [Kitematic](http://kitematic.com). Kitematic will handle all prerequisites.
 
@@ -55,27 +105,25 @@ It is recommended to install Terra globally.
 
   ![Kitematic CLI](images/kitematic_cli.png)
 
+6. Install Terra:
+
+  Currently, the `composer global-install` method is not working. See https://github.com/terra-ops/terra-app/issues/25
+  
+  To install terra manually:
+  
+        git clone https://github.com/terra-ops/terra-app.git /usr/share/terra
+        cd /usr/share/terra
+        composer install
+        ln -s /usr/share/terra/bin/terra /usr/local/bin/terra
+
+## Windows
+
+- [https://getcomposer.org/doc/00-intro.md#installation-windows](https://getcomposer.org/doc/00-intro.md#installation-windows)
+
+
   _Note: Windows is currently untested._
 
-## Installing Docker Compose
-
-**Ubuntu:**
-
-    curl -L https://github.com/docker/compose/releases/download/1.2.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
-    chmod +x /usr/local/bin/docker-compose
-
-
-**OSX/Windows:**
-
-- No additional step necessary; this was already taken care of in the previous step when you installed Kitematic.
-
-
-## Installing Terra 0.x
-
-**For general usage (all platforms):**
-
-    composer global require terra/terra-app:dev-master
-
+## Contributing to Terra
 
 **If you plan on contributing to Terra:**
 
@@ -89,7 +137,7 @@ Then:
     composer install
 
 
-### That should be it!
+## That should be it!
 
 Try to run `terra` on the command line and you should see the default output. Remember if you are using Kitematic to use the Docker CLI provided as mentioned above.
 

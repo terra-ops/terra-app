@@ -1,2 +1,9 @@
-vendor
+# Composer
+/vendor
+
+# Binaries
+/box.phar
+/terra.phar
+
+#App
 .vagrant/*

@@ -2,9 +2,10 @@ site_name: Terra Docs
 pages:
   - [index.md, 'Home']
   - [install.md, 'General', 'Install']
-  - [example-setup.md, 'Setup Example: openFDA', 'Setup Example: openFDA']
+  - [example-setup.md, 'openFDA', 'Setup Example: openFDA']
   - [drupal.md, 'General', 'Setting up a Drupal Site']
-  - [containers.md, 'Container Overview', 'How terra utilizes containers']
+  - [containers.md, 'General', 'Docker Container Strategy']
+  - [development.md, 'General', 'Developing Terra']
 theme: readthedocs
 site_author: ""
 repo_url: https://github.com/terra-ops/terra-app

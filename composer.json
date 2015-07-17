@@ -6,8 +6,6 @@
         "symfony/config": "~2.6",
         "symfony/console": "~2.6",
         "symfony/filesystem": "~2.6",
-        "symfony/finder": "~2.6",
-        "symfony/form": "~2.6",
         "symfony/process": "~2.6",
         "symfony/yaml": "~2.6",
         "cpliakas/git-wrapper": "~1.4",
@@ -23,9 +21,9 @@
       "issues": "https://github.com/terra-ops/terra-app/issues"
     },
     "autoload": {
-        "psr-0": { "terra": "src/" }
+        "psr-4": { "terra\\": "src/terra/" }
     },
     "bin": [
-        "terra"
+        "bin/terra"
     ]
 }
