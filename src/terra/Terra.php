@@ -4,38 +4,37 @@ namespace terra;
 
 /**
  * Class Terra.
- *
- * @package terra
  */
-class Terra {
+class Terra
+{
+    const VERSION = '0.x';
 
-  const VERSION = '0.x';
+    /**
+     * Holds Terra configuration settings.
+     *
+     * @var Config
+     */
+    private $config;
 
-  /**
-   * Holds Terra configuration settings.
-   *
-   * @var Config
-   */
-  private $config;
+    /**
+     * Getter for Configuration.
+     *
+     * @return Config
+     *                Configuration object.
+     */
+    public function getConfig()
+    {
+        return $this->config;
+    }
 
-  /**
-   * Getter for Configuration.
-   *
-   * @return Config
-   *   Configuration object.
-   */
-  public function getConfig() {
-    return $this->config;
-  }
-
-  /**
-   * Setter for Configuration.
-   *
-   * @param Config $config
-   *   Configuration object.
-   */
-  public function setConfig(Config $config) {
-    $this->config = $config;
-  }
-
+    /**
+     * Setter for Configuration.
+     *
+     * @param Config $config
+     *                       Configuration object.
+     */
+    public function setConfig(Config $config)
+    {
+        $this->config = $config;
+    }
 }

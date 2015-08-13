@@ -1,6 +1,8 @@
 # Installation
 
-Currently there are a few steps to get terra working.  We want installation to be as fast and simple as possible, so we will be working on a single install script that sets up all of the prerequisites. 
+Currently there are a few steps to get terra working.  
+
+We want installation to be as fast and simple as possible, so we will be working on a single install script that sets up all of the prerequisites for any OS. 
 
 ## Prerequisites
 
@@ -9,12 +11,28 @@ Terra depends on the following tools.  The instructions below will guide you thr
 - PHP
 - git
 - Composer [http://getcomposer.org](http://getcomposer.org)
-- Docker [http://docker.com](http://docker.com)
-- Docker Compose [https://docs.docker.com/compose](https://docs.docker.com/compose)
+- Drush (7.x) [http://drush.org](http://drush.org)
+- Docker (1.7.x) [http://docker.com](http://docker.com)
+- Docker Compose (1.3.x) [https://docs.docker.com/compose](https://docs.docker.com/compose)
+- Docker Machine (0.3.x) [https://docs.docker.com/machine](https://docs.docker.com/machine)
+- VirtualBox (4.3, [Look for "Older Builds" on the website.](https://www.virtualbox.org/wiki/Download_Old_Builds_4_3)) Required only on MacOSx 
+
+Docker Machine isn't currently required but it will be soon. :)
 
 ## Ubuntu 
 
 Terra recommends Ubuntu Trusty (14.04 or higher).
+
+### Automatic Install for Ubuntu 14
+
+We have created a `install.sh` script that runs you through this entire process
+
+To run the automatic installer, run the following commands as root:
+
+        wget https://raw.githubusercontent.com/terra-ops/terra-app/master/install.sh
+        bash install.sh
+
+### Manual Install
 
 Run all of the following commands as root, or with `sudo`.
 
@@ -63,9 +81,15 @@ Run all of the following commands as root, or with `sudo`.
 
 6. Install Terra:
 
-  Currently, the `composer global-install` method is not working. See https://github.com/terra-ops/terra-app/issues/25
+  Terra can be installed with `composer global require` however an extra step is 
+  needed to put composer's `bin` folder into your system path.
   
-  To install terra manually:
+  To install terra automatically, run the following as *your user* (not root):
+    
+        composer global require terra/terra-app:dev-master
+        echo 'export PATH="$HOME/.composer/vendor/bin:$PATH"' >> $HOME/.bashrc
+  
+  To install terra manually, run the following as *root*::
   
         git clone https://github.com/terra-ops/terra-app.git /usr/share/terra
         cd /usr/share/terra
@@ -85,7 +109,13 @@ Run all of the following commands as root, or with `sudo`.
         
 ## OSX
 
-Running docker in OSx requires a slightly different setup.
+Running docker and the others natively in OSx works well.
+
+The docker host, or daemon, must run in a virtualmachine.
+
+"boot2docker" is the virtualmachine 
+
+There is a lot of nuance in using Docker on OSX.  It will help to read the guide about Docker on OSX here: http://viget.com/extend/how-to-use-docker-on-os-x-the-missing-guide
 
 1. Install PHP & Git:
 
@@ -107,9 +137,15 @@ Running docker in OSx requires a slightly different setup.
 
 6. Install Terra:
 
-  Currently, the `composer global-install` method is not working. See https://github.com/terra-ops/terra-app/issues/25
+  Terra can be installed with `composer global require` however an extra step is 
+  needed to put composer's `bin` folder into your system path.
   
-  To install terra manually:
+  To install terra automatically, run the following as *your user* (not root):
+    
+        composer global require terra/terra-app:dev-master
+        echo 'export PATH="$HOME/.composer/vendor/bin:$PATH"' >> $HOME/.bashrc
+  
+  To install terra manually, run the following as *root*::
   
         git clone https://github.com/terra-ops/terra-app.git /usr/share/terra
         cd /usr/share/terra

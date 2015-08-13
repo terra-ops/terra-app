@@ -1,3 +1,17 @@
+Enabling Automatic Installation
+===============================
+
+To get a drupal environment to fully instantiate and enable, you must add to .terra.yml's hooks.
+
+The app located at https://github.com/jonpugh/drupal-terra will be installed automatically upon environment enabling.
+
+See https://github.com/jonpugh/drupal-terra/blob/master/.terra.yml for an example on how to get your app to 
+install automatically.
+
+You can watch this app have an environment created here: https://www.youtube.com/watch?v=nNvTiEUXqFE
+
+![terra environment:add](images/terra-environment-enable-web.gif)
+
 Setting up a Drupal Site
 ========================
 
@@ -73,3 +87,9 @@ How to get a drupal site running on Terra:
   
   When you hit Submit, the installer should run, and you should get a Drupal site!
    
+Makefile Driven Development
+===========================
+
+Using Terra's build hooks, you can use makefile for your app.
+
+See the repo at https://github.com/jonpugh/drupal-terra for an example.

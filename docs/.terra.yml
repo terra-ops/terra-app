@@ -1,11 +1,47 @@
 # The relative path to your exposed web files.
 document_root: docroot
 
+# The path to your behat.yml and composer.json file for behat tests.
+# If you have this property specified, running the `terra environment:test` command will run `composer update` and then
+# `bin/behat` in that folder!
+behat_path: tests
 
+# Hooks are commands that are triggered on certain events
+hooks:
 
+    # On environment:add
+    build: |
+      drush make drupal.make www --prepare-install -y
+      echo "\$databases['default']['default'] = array(
+        'driver' => 'mysql',
+        'database' => 'drupal',
+        'username' => 'drupal',
+        'password' => 'drupal',
+        'host' => 'database',
+      );" >> www/sites/default/settings.php
+
+    # On environment:enable
+    enable_first: |
+      drush {{alias}} site-install -y
+      drush {{alias}} uli
+
+    # On environment:deploy
+    deploy: |
+      drush {{alias}} updb -y
+      drush {{}} cc all
 
 # Specific settings for docker compose go here
 docker_compose:
+
+  # Overrides will replace any item in the entire docker-compose array.
+  overrides:
+    app:
+      image: wordpress
+      environment:
+        WORDPRESS_DB_HOST: database
+        WORDPRESS_DB_USER: drupal
+        WORDPRESS_DB_NAME: drupal
+        WORDPRESS_DB_PASSWORD: drupal
 
   # App services are docker compose images.
   # They will be added as-is to the generated docker-compose.yml file,

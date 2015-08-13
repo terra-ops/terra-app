@@ -2,11 +2,62 @@
 
 ![Terra command line interface](https://pbs.twimg.com/media/CHj2HvyUYAAaivy.png:large)
 
+## About
+
+Terra is a suite of tools for the purpose of standing up web apps with Docker quickly and easily.
+
+It is designed to be as simple as possible for developers, while being powerful enough to use in production at scale.
+
+With Terra, all you care about is your site's code.  Stop wasting time setting up environments, let terra and docker do all the work for you.
+
+## Community
+
+Please join the chat on Gitter.  We want as much feedback as possible!
+
+[![Join the chat at https://gitter.im/opendevshop/devshop](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/terra-ops/terra-app)
+
 ## Documentation & Issues
 
 [Read the Docs](http://terra.readthedocs.org/) or help [improve the docs](https://github.com/terra/devshop/edit/0.x/README.md).
 
 [Issues](https://github.com/terra-ops/terra-app/issues) and [Story Boarding](https://huboard.com/terra-ops/terra-app/)
+
+## Example Apps
+
+### Drupal 7 Core
+
+https://github.com/terra-ops/example-drupal
+
+### Drupal 7 Makefile
+
+https://github.com/terra-ops/example-drush-make
+
+### Drupal 8
+
+https://github.com/terra-ops/example-drupal8
+
+### Wordpress
+
+Replaces the `terra/drupal` docker image with `wordpress`
+
+https://github.com/terra-ops/example-wordpress
+
+### Scaler
+
+Simply prints the IP address to test scaling.
+
+https://github.com/terra-ops/example-scale
+
+**Symfony**
+Terra API is a symfony app.  Use it as an example.
+https://github.com/terra-ops/terra-api
+
+
+## Coding Standards
+
+As a symfony app, we are following PSR-2 Coding Standards.
+
+Use 4 spaces for indentation, and follow all the other rules specified at http://www.php-fig.org/psr/psr-2/
 
 ## Example Project: 18F Agile BPA Prototype
 
@@ -15,6 +66,18 @@ NuCivic submitted a working prototype for the 18F Agile BPA.
 We used Terra as the recommended method for recreating the site on another server.
 
 See the [instructions](example-setup.md) on setting up http://openfda.nucivic.build on another server using Terra. 
+
+## Terra Apps
+
+Each app you run with terra should have a `.terra.yml` file in the root.
+
+To see an example file, see https://github.com/terra-ops/terra-cli/blob/master/docs/.terra.yml
+
+## Terra API
+
+The "Terra API" project serves as a web based interface for Terra. It is built on Drupal 8.
+
+See the [terra-api](https://github.com/terra-ops/terra-api/blob/master/README.md) GitHub repo for more information.
 
 ## Origin
 
@@ -99,6 +162,15 @@ I am going to direct planning in an agile way as much as possible.  Please post 
 #### `terra environment:scale`
   Set the number of "app" containers.  This command is a wrapper for `docker compose app=5`.
 
+# Vagrant
+
+There is a Vagrantfile in the repo that can be used to fire up a linux server with Terra installed.
+
+Use the vagrant plugin "vagrant-hostsupdater" to automatically set your /etc/hosts file for the VM:
+  
+  ```
+  $ vagrant plugin install vagrant-hostsupdater
+  ```
 
 # History
 
@@ -114,7 +186,7 @@ We love Kalabox and the Kalamuna team, but there are a few key differences:
 
 1. Terra is designed for all things: local development, testing, and production.
 2. Terra is written in PHP & Symfony: Kalabox is written in Node JS
-3. Terra is the successor to Aegir & devshop.  We hope to recruit a large community from those tools.
+3. Terra is a proposed platform to power the future of Aegir & devshop.  We hope to recruit a large community from those tools.
 4. Terra currently extends the kalabox/drush container to offer a container to SSH into.  
  
 We hope to collaborate with them on as much as possible.

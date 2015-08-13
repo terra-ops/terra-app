@@ -5,7 +5,7 @@ Vagrant.configure(2) do |config|
   config.vm.define 'terra' do |t|
     t.vm.box = "ubuntu/trusty64"
     t.vm.hostname = "terra"
-    t.vm.network "private_network", ip: "192.168.33.10"
+    t.vm.network "private_network", ip: "7.3.22.4"
 
     # Run the terra install script
     t.vm.provision "shell",
@@ -19,4 +19,10 @@ Vagrant.configure(2) do |config|
     t.vm.provision "shell",
       inline: "su vagrant -c 'ssh-keygen -t rsa -N \"\" -f ~/.ssh/id_rsa' "
   end
+
+  config.vm.provider "virtualbox" do |v|
+    v.memory = 2048
+    v.cpus = 2
+  end
+
 end

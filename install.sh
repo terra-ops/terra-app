@@ -31,6 +31,11 @@ cd /usr/share/terra
 composer install
 ln -s /usr/share/terra/bin/terra /usr/local/bin/terra
 
+# Don't confirm host key checking for ssh to localhost.
+echo "Host localhost
+    StrictHostKeyChecking no" > ~/.ssh/config
+chmod 600 ~/.ssh/config
+
 # Notify User
 echo "==========================================================="
 echo " Terra has been installed! "
