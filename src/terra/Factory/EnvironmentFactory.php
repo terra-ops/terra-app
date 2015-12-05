@@ -310,7 +310,7 @@ class EnvironmentFactory
                 '80/tcp',
             ),
             'ports' => array(
-                ':80',
+                80,
             ),
             'restart' => 'on-failure',
         );
@@ -354,7 +354,7 @@ class EnvironmentFactory
                 'database',
             ),
             'ports' => array(
-                ':22',
+                22,
             ),
             'volumes' => array(
                 "$document_root:/var/www/html",
