@@ -1,0 +1,7 @@
+# Default Playbook
+---
+- hosts: default
+  user: root
+  roles:
+    - geerlingguy.php
+    - geerlingguy.git

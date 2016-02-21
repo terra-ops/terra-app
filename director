@@ -1,0 +1,14 @@
+#!/usr/bin/env php
+<?php
+
+// set to run indefinitely
+set_time_limit(0);
+
+// include the composer autoloader
+require_once __DIR__ . '/vendor/autoload.php';
+
+// import the Symfony Console Application
+use Director\DirectorApplication;
+
+$app = new DirectorApplication();
+$app->run();

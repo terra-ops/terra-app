@@ -1,0 +1,6 @@
+# Allows director to deploy itself.
+hooks:
+    build: |
+      composer install
+    deploy: |
+      composer install
