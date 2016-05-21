@@ -93,7 +93,7 @@ class AppAdd extends Command
             'repo' => $repo,
             'host' => $host
         );
-        $this->getApplication()->getTerra()->getConfig()->add('apps', $name, $app);
+        $this->getApplication()->getTerra()->getConfig()->add('projects', $name, $app);
 
         if ($this->getApplication()->getTerra()->getConfig()->save()) {
             $output->writeln('<info>App saved</info>');

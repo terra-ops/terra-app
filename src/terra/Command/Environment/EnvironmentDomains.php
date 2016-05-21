@@ -136,7 +136,7 @@ class EnvironmentDomains extends Command
         }
 
         // Save the new version to the config.
-        $this->getApplication()->getTerra()->getConfig()->add('apps', array($this->app->name, 'environments', $this->environment->name), (array) $this->environment);
+        $this->getApplication()->getTerra()->getConfig()->add('projects', array($this->app->name, 'environments', $this->environment->name), (array) $this->environment);
         $this->getApplication()->getTerra()->getConfig()->save();
         $output->writeln("<info>Domain added!</info> Changes won't take effect until the environment is restarted.");
         $output->writeln('');
@@ -182,7 +182,7 @@ class EnvironmentDomains extends Command
         unset($this->environment->domains[$key]);
 
         // Save the new version to the config.
-        $this->getApplication()->getTerra()->getConfig()->add('apps', array($this->app->name, 'environments', $this->environment->name), (array) $this->environment);
+        $this->getApplication()->getTerra()->getConfig()->add('projects', array($this->app->name, 'environments', $this->environment->name), (array) $this->environment);
         $this->getApplication()->getTerra()->getConfig()->save();
         $output->writeln("<info>Domain removed.</info> Changes won't take effect until the environment is restarted.");
         $output->writeln('');

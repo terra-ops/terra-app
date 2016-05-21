@@ -77,7 +77,7 @@ class EnvironmentRemove extends Command
             $environmentFactory->destroy();
 
             unset($this->app->environments[$environment_name]);
-            $this->getApplication()->getTerra()->getConfig()->add('apps', $app_name, (array) $this->app);
+            $this->getApplication()->getTerra()->getConfig()->add('projects', $app_name, (array) $this->app);
             $this->getApplication()->getTerra()->getConfig()->save();
 
             $output->writeln("<info>Environment $app_name:$environment_name has been removed.</info>");

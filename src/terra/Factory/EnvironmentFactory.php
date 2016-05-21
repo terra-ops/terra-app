@@ -160,7 +160,7 @@ class EnvironmentFactory
                   '{{alias}}' => $this->getDrushAlias(),
                   '{{uri}}' => $this->getUrl(),
                   '{{environment}}' => $this->environment->name,
-                  '{{apps}}' => $this->app->name,
+                  '{{projects}}' => $this->app->name,
                 )));
             }
             catch (\Symfony\Component\Yaml\Exception\ParseException $e) {

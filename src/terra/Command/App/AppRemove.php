@@ -42,7 +42,7 @@ class AppRemove extends Command
 
             return;
         } else {
-            $this->getApplication()->getTerra()->getConfig()->remove('apps', $name);
+            $this->getApplication()->getTerra()->getConfig()->remove('projects', $name);
             $this->getApplication()->getTerra()->getConfig()->save();
             $output->writeln("<info>App $name has been removed.</info>");
 

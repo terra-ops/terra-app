@@ -55,11 +55,11 @@ class Status extends Command
      */
     protected function systemStatus(InputInterface $input, OutputInterface $output)
     {
-        // If no apps, trigger app:Add command.
+        // If no projects, trigger app:Add command.
         $helper = $this->getHelper('question');
-        $apps = $this->getApplication()->getTerra()->getConfig()->get('apps');
+        $apps = $this->getApplication()->getTerra()->getConfig()->get('projects');
         if (empty($apps)) {
-            $output->writeln('You have no apps!');
+            $output->writeln('You have no projects!');
             $question = new ConfirmationQuestion("Add an App? [y\N] ", false);
             if ($helper->ask($input, $output, $question)) {
                 // Run environment:add command.
@@ -69,10 +69,10 @@ class Status extends Command
             }
         }
 
-        // APPS table.
+        // PROJECTS table.
         $table = $this->getHelper('table');
         $table->setHeaders(array(
-        'APPS',
+        'PROJECTS',
         'Description',
         'Repo',
         'Environments',
@@ -83,7 +83,7 @@ class Status extends Command
         foreach ($this->getApplication()
                ->getTerra()
                ->getConfig()
-               ->get('apps') as $app) {
+               ->get('projects') as $app) {
 
             $options[] = $app['name'];
             $row = array(
@@ -125,9 +125,9 @@ class Status extends Command
     protected function appStatus(InputInterface $input, OutputInterface $output)
     {
         $output->writeln('<info>App:</info> ' . $input->getArgument('app_name'));
-      // If there are no apps, return
-        if (count($this->getApplication()->getTerra()->getConfig()->get('apps')) == 0) {
-            $output->writeln('<comment>There are no apps!</comment>');
+      // If there are no projects, return
+        if (count($this->getApplication()->getTerra()->getConfig()->get('projects')) == 0) {
+            $output->writeln('<comment>There are no projects!</comment>');
             $output->writeln('Use the command <info>terra app:add</info> to add your first app.');
 
             return;
@@ -137,7 +137,7 @@ class Status extends Command
         '-' => '_',
         ));
 
-        $app = $this->getApplication()->getTerra()->getConfig()->get('apps', $app_name);
+        $app = $this->getApplication()->getTerra()->getConfig()->get('projects', $app_name);
 
         if (empty($app)) {
             $output->writeln('<error>No app with that name! </error>');
@@ -200,9 +200,9 @@ class Status extends Command
     protected function environmentStatus(InputInterface $input, OutputInterface $output)
     {
 
-        // If there are no apps, return
-        if (count($this->getApplication()->getTerra()->getConfig()->get('apps')) == 0) {
-            $output->writeln('<comment>There are no apps!</comment>');
+        // If there are no projects, return
+        if (count($this->getApplication()->getTerra()->getConfig()->get('projects')) == 0) {
+            $output->writeln('<comment>There are no projects!</comment>');
             $output->writeln('Use the command <info>terra app:add</info> to add your first app.');
 
             return;
@@ -211,7 +211,7 @@ class Status extends Command
         $app_name = $input->getArgument('app_name');
         $environment_name = $input->getArgument('environment_name');
 
-        $app = $this->getApplication()->getTerra()->getConfig()->get('apps', $app_name);
+        $app = $this->getApplication()->getTerra()->getConfig()->get('projects', $app_name);
 
         // If no environments:
         if (count(($app['environments'])) == 0) {

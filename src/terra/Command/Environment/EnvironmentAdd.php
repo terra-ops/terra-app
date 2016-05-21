@@ -87,7 +87,7 @@ class EnvironmentAdd extends Command
         // Path
         $path = $input->getArgument('path');
         if (empty($path)) {
-            // Load apps base path from Config.
+            // Load projects base path from Config.
             // @TODO: #110 Ask what they want their apps_basepath to be anc save it to the config.
             $config_path = $this->getApplication()->getTerra()->getConfig()->get('apps_basepath');
 
@@ -95,14 +95,14 @@ class EnvironmentAdd extends Command
             if (file_exists($config_path)) {
               $default_path = realpath($config_path).'/'.$this->app->name.'/'.$environment_name;
             }
-            // If it doesn't exist, just use ~/Apps/$ENV as the default path.
+            // If it doesn't exist, just use ~/Projects/$ENV as the default path.
             else {
 
-              // Offer to create the apps path.
-              $question = new ConfirmationQuestion("Default apps folder {$config_path} is missing.  Create it? [y\N] ", false);
+              // Offer to create the projects path.
+              $question = new ConfirmationQuestion("Default projects folder {$config_path} is missing.  Create it? [y\N] ", false);
               if ($helper->ask($input, $output, $question)) {
                 mkdir($config_path);
-                $default_path = $_SERVER['HOME'] . '/Apps/' . $this->app->name . '/' . $environment_name;
+                $default_path = $_SERVER['HOME'] . '/Projects/' . $this->app->name . '/' . $environment_name;
               }
             }
             if (!$input->getOption('yes')) {
@@ -143,7 +143,7 @@ class EnvironmentAdd extends Command
         );
 
         // Prepare the environment factory.
-        // Clone the apps source code to the desired path.
+        // Clone the projects source code to the desired path.
         $environmentFactory = new EnvironmentFactory($environment, $this->app);
 
         // Save environment to config.

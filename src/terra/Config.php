@@ -48,9 +48,9 @@ class Config implements ConfigurationInterface
           ->defaultValue('/usr/bin/git')
         ->end()
         ->scalarNode('apps_basepath')
-          ->defaultValue($_SERVER['HOME'].'/Apps')
+          ->defaultValue($_SERVER['HOME'].'/Projects')
         ->end()
-        ->arrayNode('apps')
+        ->arrayNode('projects')
           ->prototype('array')
           ->children()
             ->scalarNode('name')
@@ -211,7 +211,7 @@ class Config implements ConfigurationInterface
 
         $environment_config = (array) $environment;
         unset($environment_config['app']);
-        $this->config['apps'][$environment->app]['environments'][$environment->name] = $environment_config;
+        $this->config['projects'][$environment->app]['environments'][$environment->name] = $environment_config;
     }
 
     /**
@@ -227,7 +227,7 @@ class Config implements ConfigurationInterface
 
         if (!$fs->exists(getenv('HOME').'/.terra')) {
             try {
-                $fs->mkdir(getenv('HOME').'/.terra/apps');
+                $fs->mkdir(getenv('HOME').'/.terra/projects');
             } catch (IOExceptionInterface $e) {
                 return false;
             }

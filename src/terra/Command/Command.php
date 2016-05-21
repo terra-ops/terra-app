@@ -80,9 +80,9 @@ class Command extends CommandBase
     public function getApp(InputInterface $input, OutputInterface $output)
     {
 
-        // If there are no apps, end command.
-        if (count($this->getApplication()->getTerra()->getConfig()->get('apps')) == 0) {
-            throw new \Exception('There are no apps to remove!. Use the command <info>terra app:add</info> to add your first app.');
+        // If there are no projects, end command.
+        if (count($this->getApplication()->getTerra()->getConfig()->get('projects')) == 0) {
+            throw new \Exception('There are no projects to remove!. Use the command <info>terra app:add</info> to add your first app.');
         }
 
         $helper = $this->getHelper('question');
@@ -90,7 +90,7 @@ class Command extends CommandBase
 
         // If no name specified provide options
         if (empty($app_name)) {
-          $applications = array_flip(array_keys($this->getApplication()->getTerra()->getConfig()->get('apps')));
+          $applications = array_flip(array_keys($this->getApplication()->getTerra()->getConfig()->get('projects')));
           foreach (array_keys($applications) as $app_key) {
               $applications[$app_key] = $app_key;
             }
@@ -109,7 +109,7 @@ class Command extends CommandBase
         }
         else {
             // Set the app for this command.
-            $this->app = (object) $this->getApplication()->getTerra()->getConfig()->get('apps', $app_name);
+            $this->app = (object) $this->getApplication()->getTerra()->getConfig()->get('projects', $app_name);
         }
     }
 

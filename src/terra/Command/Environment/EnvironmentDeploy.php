@@ -63,7 +63,7 @@ class EnvironmentDeploy extends Command
         $this->environment->version = $environment->deploy($git_ref);
 
         // Save the new version to the config.
-        $this->getApplication()->getTerra()->getConfig()->add('apps', array($this->app->name, 'environments', $this->environment->name), (array) $this->environment);
+        $this->getApplication()->getTerra()->getConfig()->add('projects', array($this->app->name, 'environments', $this->environment->name), (array) $this->environment);
         $this->getApplication()->getTerra()->getConfig()->save();
     }
 }
