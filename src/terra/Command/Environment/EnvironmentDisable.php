@@ -20,12 +20,12 @@ class EnvironmentDisable extends Command
             ->addArgument(
                 'app_name',
                 InputArgument::OPTIONAL,
-                'The name the app to disable.'
+                'The name of the app to disable.'
             )
             ->addArgument(
                 'environment_name',
                 InputArgument::OPTIONAL,
-                'The name the environment to disable.'
+                'The name of the environment to disable.'
             )
         ;
     }

@@ -19,7 +19,7 @@ class AppRemove extends Command
         ->addArgument(
             'app_name',
             InputArgument::OPTIONAL,
-            'The name the app to remove.'
+            'The name of the app to remove.'
         )
         ;
     }

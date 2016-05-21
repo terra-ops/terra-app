@@ -19,12 +19,12 @@ class Status extends Command
         ->addArgument(
             'app_name',
             InputArgument::OPTIONAL,
-            'The name the app to check the status of.'
+            'The name of the app to check the status of.'
         )
         ->addArgument(
             'environment_name',
             InputArgument::OPTIONAL,
-            'The name the environment to check the status of.'
+            'The name of the environment to check the status of.'
         );
     }
 

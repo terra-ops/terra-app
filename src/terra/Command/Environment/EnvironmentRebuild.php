@@ -24,12 +24,12 @@ class EnvironmentRebuild extends Command
         ->addArgument(
             'app_name',
             InputArgument::OPTIONAL,
-            'The name the app to remove.'
+            'The name of the app to remove.'
         )
         ->addArgument(
             'environment_name',
             InputArgument::OPTIONAL,
-            'The name the environment to remove.'
+            'The name of the environment to remove.'
         )
         ->addOption(
             'source',

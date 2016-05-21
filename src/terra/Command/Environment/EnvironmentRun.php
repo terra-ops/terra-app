@@ -25,17 +25,17 @@ class EnvironmentRun extends Command {
       ->addArgument(
         'app_name',
         InputArgument::REQUIRED,
-        'The name the app'
+        'The name of the app'
       )
       ->addArgument(
         'environment_name',
         InputArgument::REQUIRED,
-        'The name the environment'
+        'The name of the environment'
       )
       ->addArgument(
         'service',
         InputArgument::REQUIRED,
-        'The name the service to run command on. Can be load, app, database, drush, or more if you have added services to docker composer.'
+        'The name of the service to run command on. Can be load, app, database, drush, or more if you have added services to docker composer.'
       )
       ->addArgument(
         'commands',

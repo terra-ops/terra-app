@@ -30,12 +30,12 @@ class EnvironmentUpdate extends Command
         ->addArgument(
             'app_name',
             InputArgument::OPTIONAL,
-            'The name the app.'
+            'The name of the app.'
         )
         ->addArgument(
             'environment_name',
             InputArgument::OPTIONAL,
-            'The name the environment.'
+            'The name of the environment.'
         )
         ->addOption(
             'branch',

@@ -20,12 +20,12 @@ class EnvironmentEnable extends Command
         ->addArgument(
             'app_name',
             InputArgument::OPTIONAL,
-            'The name the app to enable.'
+            'The name of the app to enable.'
         )
         ->addArgument(
             'environment_name',
             InputArgument::OPTIONAL,
-            'The name the environment to enable.'
+            'The name of the environment to enable.'
         )
         ;
     }

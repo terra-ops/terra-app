@@ -25,12 +25,12 @@ class EnvironmentDrush extends Command {
       ->addArgument(
         'app_name',
         InputArgument::REQUIRED,
-        'The name the app'
+        'The name of the app'
       )
       ->addArgument(
         'environment_name',
         InputArgument::REQUIRED,
-        'The name the environment'
+        'The name of the environment'
       )
       ->addArgument(
         'commands',
