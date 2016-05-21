@@ -47,7 +47,7 @@ class Config implements ConfigurationInterface
         ->scalarNode('git')
           ->defaultValue('/usr/bin/git')
         ->end()
-        ->scalarNode('apps_basepath')
+        ->scalarNode('projects_basepath')
           ->defaultValue($_SERVER['HOME'].'/Projects')
         ->end()
         ->arrayNode('projects')

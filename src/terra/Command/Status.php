@@ -40,7 +40,7 @@ class Status extends Command
             $this->systemStatus($input, $output);
         } // Show an project's status
         elseif (empty($environment_name)) {
-            $this->appStatus($input, $output);
+            $this->projectstatus($input, $output);
         } // Show an environment's status.
         elseif (!empty($environment_name)) {
             $this->environmentStatus($input, $output);
@@ -57,8 +57,8 @@ class Status extends Command
     {
         // If no projects, trigger project:Add command.
         $helper = $this->getHelper('question');
-        $apps = $this->getApplication()->getTerra()->getConfig()->get('projects');
-        if (empty($apps)) {
+        $projects = $this->getApplication()->getTerra()->getConfig()->get('projects');
+        if (empty($projects)) {
             $output->writeln('You have no projects!');
             $question = new ConfirmationQuestion("Add an Project? [y\N] ", false);
             if ($helper->ask($input, $output, $question)) {
@@ -107,10 +107,10 @@ class Status extends Command
 //            return;
 //        }
 //        else {
-//            // If an project name was chosen, run appStatus
+//            // If an project name was chosen, run projectstatus
 //            $formatter = $this->getHelper('formatter');
 //            $input->setArgument('project_name', $name);
-//            $this->appStatus($input, $output);
+//            $this->projectstatus($input, $output);
 //
 //        }
     }
@@ -122,7 +122,7 @@ class Status extends Command
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @param $app
      */
-    protected function appStatus(InputInterface $input, OutputInterface $output)
+    protected function projectstatus(InputInterface $input, OutputInterface $output)
     {
         $output->writeln('<info>Project:</info> ' . $input->getArgument('project_name'));
       // If there are no projects, return
