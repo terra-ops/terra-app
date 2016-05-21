@@ -23,7 +23,7 @@ class EnvironmentProxyEnable extends Command
         $output->writeln('Hello Terra!');
         $cmd = 'docker run -d -p 80:80 -v /var/run/docker.sock:/tmp/docker.sock:ro jwilder/nginx-proxy';
 
-        // Confirm removal of the app.
+        // Confirm removal of the project.
         $helper = $this->getHelper('question');
         $question = new ConfirmationQuestion("Run $cmd? [y/N] ", false);
         if (!$helper->ask($input, $output, $question)) {

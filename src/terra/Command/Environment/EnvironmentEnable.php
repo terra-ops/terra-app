@@ -20,7 +20,7 @@ class EnvironmentEnable extends Command
         ->addArgument(
             'app_name',
             InputArgument::OPTIONAL,
-            'The name of the app to enable.'
+            'The name of the project to enable.'
         )
         ->addArgument(
             'environment_name',
@@ -32,15 +32,15 @@ class EnvironmentEnable extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        // Ask for an app and environment.
+        // Ask for an project and environment.
         $this->getApp($input, $output);
         $this->getEnvironment($input, $output);
 
         $environment_name = $this->environment->name;
-        $app_name = $this->app->name;
+        $app_name = $this->project->name;
 
         // Attempt to enable the environment.
-        $environment_factory = new EnvironmentFactory($this->environment, $this->app);
+        $environment_factory = new EnvironmentFactory($this->environment, $this->project);
         if (!$environment_factory->enable()) {
             $output->writeln('<error>Something went wrong, environment not enabled.</error>');
 
@@ -52,8 +52,8 @@ class EnvironmentEnable extends Command
         $host = $environment_factory->getHost();
         $this->environment->url = "http://$host:$port";
 
-        // When passing to saveEnvironment, it must have app and name properties (for now).
-        $this->environment->app = $app_name;
+        // When passing to saveEnvironment, it must have project and name properties (for now).
+        $this->environment->project = $app_name;
         $this->environment->name = $environment_name;
 
         // Save environment metadata.
@@ -76,7 +76,7 @@ class EnvironmentEnable extends Command
 
         // Run the enable hooks
         $output->writeln('');
-        $output->writeln('Running <comment>ENABLE</comment> app hook...');
+        $output->writeln('Running <comment>ENABLE</comment> project hook...');
 
         $environment_factory->getConfig();
         $output->writeln('Sleeping for 5 seconds to let db server start...');

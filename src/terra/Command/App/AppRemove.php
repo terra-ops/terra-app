@@ -1,6 +1,6 @@
 <?php
 
-namespace terra\Command\App;
+namespace terra\Command\Project;
 
 use terra\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -14,12 +14,12 @@ class AppRemove extends Command
     protected function configure()
     {
         $this
-        ->setName('app:remove')
-        ->setDescription('Removes an app.')
+        ->setName('project:remove')
+        ->setDescription('Removes an project.')
         ->addArgument(
             'app_name',
             InputArgument::OPTIONAL,
-            'The name of the app to remove.'
+            'The name of the project to remove.'
         )
         ;
     }
@@ -28,11 +28,11 @@ class AppRemove extends Command
 
         $helper = $this->getHelper('question');
         $this->getApp($input, $output);
-        $name = $this->app->name;
+        $name = $this->project->name;
 
-        // Confirm removal of the app.
+        // Confirm removal of the project.
         if (!$input->hasOption('no-interaction')) {
-            $question = new ConfirmationQuestion("Are you sure you would like to remove the app <question>$name</question>? [y/N] ", false);
+            $question = new ConfirmationQuestion("Are you sure you would like to remove the project <question>$name</question>? [y/N] ", false);
         }
         else {
             $output->writeln("<warning>Running with --no-interaction. Skipping confirmation step.</warning>");
@@ -44,9 +44,9 @@ class AppRemove extends Command
         } else {
             $this->getApplication()->getTerra()->getConfig()->remove('projects', $name);
             $this->getApplication()->getTerra()->getConfig()->save();
-            $output->writeln("<info>App $name has been removed.</info>");
+            $output->writeln("<info>Project $name has been removed.</info>");
 
-            // @TODO: Remove all environments and files associated with this app.
+            // @TODO: Remove all environments and files associated with this project.
         }
     }
 }

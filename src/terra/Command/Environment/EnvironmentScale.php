@@ -16,11 +16,11 @@ class EnvironmentScale extends Command
     {
         $this
         ->setName('environment:scale')
-        ->setDescription('Scale the app container.')
+        ->setDescription('Scale the project container.')
         ->addArgument(
             'app_name',
             InputArgument::OPTIONAL,
-            'The name of the app to enable.'
+            'The name of the project to enable.'
         )
         ->addArgument(
             'environment_name',
@@ -30,7 +30,7 @@ class EnvironmentScale extends Command
         ->addArgument(
             'scale',
             InputArgument::OPTIONAL,
-            'The number of app containers to run.'
+            'The number of project containers to run.'
         )
         ;
     }
@@ -39,14 +39,14 @@ class EnvironmentScale extends Command
     {
         $output->writeln('Hello Terra!');
 
-        // Ask for an app and environment.
+        // Ask for an project and environment.
         $this->getApp($input, $output);
         $this->getEnvironment($input, $output);
 
         $environment_name = $this->environment->name;
-        $app_name = $this->app->name;
+        $app_name = $this->project->name;
 
-        $environment_factory = new EnvironmentFactory($this->environment, $this->app);
+        $environment_factory = new EnvironmentFactory($this->environment, $this->project);
         $environment_factory->writeConfig();
         $current_scale = $environment_factory->getScale();
 
@@ -56,7 +56,7 @@ class EnvironmentScale extends Command
         // If no scale ask for scale.
         if (empty($scale)) {
             $question = new Question(
-                'How many app containers? '
+                'How many project containers? '
             );
             $helper = $this->getHelper('question');
             $scale = $helper->ask($input, $output, $question);

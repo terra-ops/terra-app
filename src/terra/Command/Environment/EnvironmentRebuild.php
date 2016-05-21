@@ -24,7 +24,7 @@ class EnvironmentRebuild extends Command
         ->addArgument(
             'app_name',
             InputArgument::OPTIONAL,
-            'The name of the app to remove.'
+            'The name of the project to remove.'
         )
         ->addArgument(
             'environment_name',
@@ -41,7 +41,7 @@ class EnvironmentRebuild extends Command
     }
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        // Ask for an app and environment.
+        // Ask for an project and environment.
         $this->getApp($input, $output);
         $this->getEnvironment($input, $output);
 
@@ -51,7 +51,7 @@ class EnvironmentRebuild extends Command
         }
 
         // Get Environment and Config
-        $environment_factory = new EnvironmentFactory($this->environment, $this->app);
+        $environment_factory = new EnvironmentFactory($this->environment, $this->project);
         $environment_factory->getConfig();
 
         // Get argument override
@@ -60,7 +60,7 @@ class EnvironmentRebuild extends Command
         // Check for config
         if (empty($environment_factory->config['rebuild_source'])) {
             if (empty($rebuild_source_argument)) {
-                throw new \Exception("To run the 'environment:rebuild' command you must have 'rebuild_source: @drushalias' in your app's .terra.yml file (or specify the source drush alias with 'environment:rebuild --rebuild_source=@alias').");
+                throw new \Exception("To run the 'environment:rebuild' command you must have 'rebuild_source: @drushalias' in your project's .terra.yml file (or specify the source drush alias with 'environment:rebuild --rebuild_source=@alias').");
             }
         }
         else {

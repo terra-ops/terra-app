@@ -20,7 +20,7 @@ class EnvironmentDeploy extends Command
         ->addArgument(
             'app_name',
             InputArgument::OPTIONAL,
-            'The app to lookup.'
+            'The project to lookup.'
         )
         ->addArgument(
             'environment_name',
@@ -38,7 +38,7 @@ class EnvironmentDeploy extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
 
-        // Ask for an app and environment.
+        // Ask for an project and environment.
         $this->getApp($input, $output);
         $this->getEnvironment($input, $output);
 
@@ -47,7 +47,7 @@ class EnvironmentDeploy extends Command
         $git_ref = $this->getAnswer($input, $output, $question, 'git_ref');
 
         // Notify user.
-        $output->writeln("Deploying App <info>{$this->app->name}</info> environment <comment>{$this->environment->name}</comment> to version <question> $git_ref </question> ...");
+        $output->writeln("Deploying Project <info>{$this->project->name}</info> environment <comment>{$this->environment->name}</comment> to version <question> $git_ref </question> ...");
 
         // Ask for confirmation.
         $helper = $this->getHelper('question');
@@ -59,11 +59,11 @@ class EnvironmentDeploy extends Command
         }
 
         // Run the deployment.
-        $environment = new EnvironmentFactory($this->environment, $this->app);
+        $environment = new EnvironmentFactory($this->environment, $this->project);
         $this->environment->version = $environment->deploy($git_ref);
 
         // Save the new version to the config.
-        $this->getApplication()->getTerra()->getConfig()->add('projects', array($this->app->name, 'environments', $this->environment->name), (array) $this->environment);
+        $this->getApplication()->getTerra()->getConfig()->add('projects', array($this->project->name, 'environments', $this->environment->name), (array) $this->environment);
         $this->getApplication()->getTerra()->getConfig()->save();
     }
 }

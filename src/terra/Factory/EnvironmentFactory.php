@@ -15,7 +15,7 @@ use Symfony\Component\Process\Process;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 
 /**
- * Service for an App.
+ * Service for an Project.
  */
 class EnvironmentFactory
 {
@@ -24,7 +24,7 @@ class EnvironmentFactory
     public $config;
 
     /**
-     * The name of the app for this environment.
+     * The name of the project for this environment.
      *
      * @var string
      */
@@ -44,7 +44,7 @@ class EnvironmentFactory
     public function __construct($environment, $app)
     {
         $this->environment = (object) $environment;
-        $this->app = (object) $app;
+        $this->project = (object) $app;
         $this->name = $this->environment->name;
     }
 
@@ -67,22 +67,22 @@ class EnvironmentFactory
             }
 
             // if repo exists in the remotes already, this working copy is ok.
-            if (strpos(strtolower($output), strtolower($this->app->repo)) !== false) {
+            if (strpos(strtolower($output), strtolower($this->project->repo)) !== false) {
                 return true;
             } else {
-                throw new Exception('Git clone already exists at that path, but it is not for this app.');
+                throw new Exception('Git clone already exists at that path, but it is not for this project.');
             }
         }
 
         try {
-            // Create App folder
+            // Create Project folder
             mkdir($path, 0755, TRUE);
             chdir($path);
 
             // Clone repo
             $wrapper = new GitWrapper();
             $wrapper->streamOutput();
-            $wrapper->cloneRepository($this->app->repo, $path);
+            $wrapper->cloneRepository($this->project->repo, $path);
 
             // Checkout correct version.
             $git = new GitWorkingCopy($wrapper, $this->getSourcePath());
@@ -125,7 +125,7 @@ class EnvironmentFactory
     public function writeConfig()
     {
 
-        // Create the app/environment folder
+        // Create the project/environment folder
         $fs = new FileSystem();
         try {
             $fs->mkdir($this->getDockerComposePath());
@@ -146,7 +146,7 @@ class EnvironmentFactory
     }
 
     /**
-     * Loads app config from environment source code into $this->config.
+     * Loads project config from environment source code into $this->config.
      */
     private function loadConfig()
     {
@@ -160,7 +160,7 @@ class EnvironmentFactory
                   '{{alias}}' => $this->getDrushAlias(),
                   '{{uri}}' => $this->getUrl(),
                   '{{environment}}' => $this->environment->name,
-                  '{{projects}}' => $this->app->name,
+                  '{{projects}}' => $this->project->name,
                 )));
             }
             catch (\Symfony\Component\Yaml\Exception\ParseException $e) {
@@ -264,7 +264,7 @@ class EnvironmentFactory
      */
     public function getDockerComposePath()
     {
-        return getenv('HOME').'/.terra/environments/'.$this->app->name.'/'.$this->app->name.'-'.$this->environment->name;
+        return getenv('HOME').'/.terra/environments/'.$this->project->name.'/'.$this->project->name.'-'.$this->environment->name;
     }
 
     /**
@@ -304,7 +304,7 @@ class EnvironmentFactory
             $hosts .= ',' . implode(',', $this->environment->domains);
         }
 
-        $environment_label = $this->app->name . ':' .
+        $environment_label = $this->project->name . ':' .
 $this->environment->name;
 
         $compose = array();
@@ -314,7 +314,7 @@ $this->environment->name;
                 'VIRTUAL_HOST' => $hosts,
             ),
             'links' => array(
-                'app',
+                'project',
             ),
             'expose' => array(
                 '80/tcp',
@@ -323,7 +323,7 @@ $this->environment->name;
                 '80',
             ),
         );
-        $compose['app'] = array(
+        $compose['project'] = array(
             'image' => 'terra/drupal',
             'tty' => true,
             'stdin_open' => true,
@@ -331,7 +331,7 @@ $this->environment->name;
                 'database',
             ),
             'volumes' => array(
-                "{$this->environment->path}:/app",
+                "{$this->environment->path}:/project",
             ),
             'environment' => array(
                 'HOST_UID' => posix_getuid(),
@@ -372,11 +372,11 @@ $this->environment->name;
             ),
         );
 
-        // Add "app_services": Additional containers linked to the app container.
+        // Add "app_services": Additional containers linked to the project container.
         $this->getConfig();
         if (isset($this->config['docker_compose']['app_services']) && is_array($this->config['docker_compose']['app_services'])) {
             foreach ($this->config['docker_compose']['app_services'] as $service => $info) {
-                $compose['app']['links'][] = $service;
+                $compose['project']['links'][] = $service;
 
                 // Look for volume paths to change
                 if (isset($info['volumes'])) {
@@ -419,8 +419,8 @@ $this->environment->name;
         foreach ($compose as $name => $service) {
             $compose[$name]['restart'] = 'on-failure';
 
-            $compose[$name]['labels']['io.rancher.stack.name'] = "terra_{$this->app->name}_{$this->environment->name}";
-            $compose[$name]['labels']['io.rancher.stack_service.name'] = "terra_{$this->app->name}_{$this->environment->name}/{$name}";
+            $compose[$name]['labels']['io.rancher.stack.name'] = "terra_{$this->project->name}_{$this->environment->name}";
+            $compose[$name]['labels']['io.rancher.stack_service.name'] = "terra_{$this->project->name}_{$this->environment->name}/{$name}";
 
             $compose[$name]['labels']['io.rancher.container.network'] = 'TRUE';
         }
@@ -523,7 +523,7 @@ $this->environment->name;
      */
     public function scale($scale)
     {
-        $cmd = "docker-compose scale app=$scale && docker-compose up -d --no-deps load";
+        $cmd = "docker-compose scale project=$scale && docker-compose up -d --no-deps load";
         $process = new Process($cmd, $this->getDockerComposePath());
         $process->setTimeout(null);
         $process->run(function ($type, $buffer) {
@@ -563,7 +563,7 @@ $this->environment->name;
      * @return bool|mixed
      */
     public function getHost() {
-        return $this->app->host;
+        return $this->project->host;
     }
 
     /**
@@ -590,19 +590,19 @@ $this->environment->name;
      */
     public function getUrl()
     {
-        return $this->app->name.'.'.$this->name.'.'.$this->app->host;
+        return $this->project->name.'.'.$this->name.'.'.$this->project->host;
     }
 
     /**
-     * Get the current scale of the app container.
+     * Get the current scale of the project container.
      *
      * @return bool
      */
     public function getScale()
     {
 
-        // Get current scale of app service
-        $process = new Process('docker-compose ps -q app', $this->getDockerComposePath());
+        // Get current scale of project service
+        $process = new Process('docker-compose ps -q project', $this->getDockerComposePath());
         $process->run();
         if (!$process->isSuccessful()) {
             return false;
@@ -618,13 +618,13 @@ $this->environment->name;
      */
     public function writeDrushAlias()
     {
-        $drush_alias_file_path = "{$_SERVER['HOME']}/.drush/terra.{$this->app->name}.aliases.drushrc.php";
+        $drush_alias_file_path = "{$_SERVER['HOME']}/.drush/terra.{$this->project->name}.aliases.drushrc.php";
 
         $drush_alias_file = array();
         $drush_alias_file[] = '<?php';
 
-        foreach ($this->app->environments as $environment_name => $environment) {
-            $factory = new self($environment, $this->app);
+        foreach ($this->project->environments as $environment_name => $environment) {
+            $factory = new self($environment, $this->project);
             $path = "/source/" . $environment['document_root'];
             $drush_alias_file[] = '// DO NOT EDIT. This is generated by Terra. Any changes will be overridden when the environment is re-enabled.';
             $drush_alias_file[] = "\$aliases['{$environment_name}'] = array(";
@@ -651,7 +651,7 @@ $this->environment->name;
      * Get the name of the drush alias.
      */
     public function getDrushAlias() {
-        return "@terra.{$this->app->name}.{$this->environment->name}";
+        return "@terra.{$this->project->name}.{$this->environment->name}";
     }
 
     /**

@@ -25,7 +25,7 @@ class EnvironmentDrush extends Command {
       ->addArgument(
         'app_name',
         InputArgument::REQUIRED,
-        'The name of the app'
+        'The name of the project'
       )
       ->addArgument(
         'environment_name',
@@ -41,12 +41,12 @@ class EnvironmentDrush extends Command {
 
   protected function execute(InputInterface $input, OutputInterface $output) {
 
-    // Ask for an app and environment.
+    // Ask for an project and environment.
     $this->getApp($input, $output);
     $this->getEnvironment($input, $output);
 
     $environment_factory = $this->getEnvironmentFactory();
-    $output->writeln('<info>App:</info> ' . $this->app->name);
+    $output->writeln('<info>Project:</info> ' . $this->project->name);
     $output->writeln('<info>Environment:</info> ' . $this->environment->name);
 
     $commands = implode(" ",$input->getArgument('commands'));

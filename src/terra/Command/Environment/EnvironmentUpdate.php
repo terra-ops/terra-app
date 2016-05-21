@@ -30,7 +30,7 @@ class EnvironmentUpdate extends Command
         ->addArgument(
             'app_name',
             InputArgument::OPTIONAL,
-            'The name of the app.'
+            'The name of the project.'
         )
         ->addArgument(
             'environment_name',
@@ -50,7 +50,7 @@ class EnvironmentUpdate extends Command
         $output->writeln('Hello Terra!');
         $helper = $this->getHelper('question');
 
-        // Ask for an app and environment.
+        // Ask for an project and environment.
         $this->getApp($input, $output);
         $this->getEnvironment($input, $output);
 
@@ -60,7 +60,7 @@ class EnvironmentUpdate extends Command
         }
 
         // Get Environment and Config
-        $environment_factory = new EnvironmentFactory($this->environment, $this->app);
+        $environment_factory = new EnvironmentFactory($this->environment, $this->project);
         $environment_factory->getConfig();
         $alias = $environment_factory->getDrushAlias();
         $version = $environment_factory->environment->version;

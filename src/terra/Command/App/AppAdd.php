@@ -1,6 +1,6 @@
 <?php
 
-namespace terra\Command\App;
+namespace terra\Command\Project;
 
 use terra\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -15,29 +15,29 @@ class AppAdd extends Command
     protected function configure()
     {
         $this
-        ->setName('app:add')
-        ->setDescription('Adds a new app.')
+        ->setName('project:add')
+        ->setDescription('Adds a new project.')
         ->addArgument(
             'name',
             InputArgument::OPTIONAL,
-            'The name of your app.'
+            'The name of your project.'
         )
         ->addArgument(
             'repo',
             InputArgument::OPTIONAL,
-            'The URL of your git repo for your app.'
+            'The URL of your git repo for your project.'
         )
         ->addOption(
             'description',
             '',
             InputArgument::OPTIONAL,
-            'The description of your app.'
+            'The description of your project.'
         )
         ->addOption(
             'host',
             '',
             InputArgument::OPTIONAL,
-            'The host of your app'
+            'The host of your project'
         )
         ->addOption(
             'create-environment',
@@ -96,9 +96,9 @@ class AppAdd extends Command
         $this->getApplication()->getTerra()->getConfig()->add('projects', $name, $app);
 
         if ($this->getApplication()->getTerra()->getConfig()->save()) {
-            $output->writeln('<info>App saved</info>');
+            $output->writeln('<info>Project saved</info>');
         } else {
-            $output->writeln('<error>App not saved!</error>');
+            $output->writeln('<error>Project not saved!</error>');
         }
 
 

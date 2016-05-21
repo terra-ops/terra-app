@@ -27,7 +27,7 @@ class EnvironmentDomains extends Command
         ->addArgument(
             'app_name',
             InputArgument::OPTIONAL,
-            'The app you would like manage the domains for.'
+            'The project you would like manage the domains for.'
         )
         ->addArgument(
             'environment_name',
@@ -48,7 +48,7 @@ class EnvironmentDomains extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        // Check if "app" argument is an action.
+        // Check if "project" argument is an action.
         if ($input->getArgument('app_name') == 'add' || $input->getArgument('app_name') == 'remove') {
             // Move argument from app_name to action
             $input->setArgument('action', $input->getArgument('app_name'));
@@ -59,7 +59,7 @@ class EnvironmentDomains extends Command
             $input->setArgument('environment_name', '');
         }
 
-        // Ask for an app.
+        // Ask for an project.
         $helper = $this->getHelper('question');
         $this->getApp($input, $output);
 
@@ -70,7 +70,7 @@ class EnvironmentDomains extends Command
         // If action argument is empty, show the list.
         if (empty($input->getArgument('action'))) {
 
-            $environment = new EnvironmentFactory($this->environment, $this->app);
+            $environment = new EnvironmentFactory($this->environment, $this->project);
             $rows[] = array('http://'. $environment->getHost() . ':' . $environment->getPort());
             $rows[] = array('http://' . $environment->getUrl());
 
@@ -81,7 +81,7 @@ class EnvironmentDomains extends Command
 
             $table = $this->getHelper('table');
             $table
-                ->setHeaders(array("Domains for {$this->app->name} {$this->environment->name}"))
+                ->setHeaders(array("Domains for {$this->project->name} {$this->environment->name}"))
                 ->setRows($rows)
             ;
             $table->render($output);
@@ -96,13 +96,13 @@ class EnvironmentDomains extends Command
 
         // Offer to re-enable the environment
         $helper = $this->getHelper('question');
-        $question = new ConfirmationQuestion("Re-enable the environment <info>{$this->app->name}:{$this->environment->name}</info> [y/N]? ", FALSE);
+        $question = new ConfirmationQuestion("Re-enable the environment <info>{$this->project->name}:{$this->environment->name}</info> [y/N]? ", FALSE);
 
         if ($helper->ask($input, $output, $question)) {
             // Run environment:enable command.
             $command = $this->getApplication()->find('environment:enable');
             $arguments = array(
-                'app_name' => $this->app->name,
+                'app_name' => $this->project->name,
                 'environment_name' => $this->environment->name,
             );
             $input = new ArrayInput($arguments);
@@ -127,7 +127,7 @@ class EnvironmentDomains extends Command
         $this->environment->domains[] = $name;
 
         $helper = $this->getHelper('question');
-        $question = new ConfirmationQuestion("Add the domain <comment>$name</comment> to the environment <info>{$this->app->name}:{$this->environment->name}</info> [y/N]? ", FALSE);
+        $question = new ConfirmationQuestion("Add the domain <comment>$name</comment> to the environment <info>{$this->project->name}:{$this->environment->name}</info> [y/N]? ", FALSE);
 
         if (!$helper->ask($input, $output, $question)) {
             $output->writeln("<fg=red>Domain not added.</>");
@@ -136,7 +136,7 @@ class EnvironmentDomains extends Command
         }
 
         // Save the new version to the config.
-        $this->getApplication()->getTerra()->getConfig()->add('projects', array($this->app->name, 'environments', $this->environment->name), (array) $this->environment);
+        $this->getApplication()->getTerra()->getConfig()->add('projects', array($this->project->name, 'environments', $this->environment->name), (array) $this->environment);
         $this->getApplication()->getTerra()->getConfig()->save();
         $output->writeln("<info>Domain added!</info> Changes won't take effect until the environment is restarted.");
         $output->writeln('');
@@ -169,7 +169,7 @@ class EnvironmentDomains extends Command
 
         // Confirm removal.
         $helper = $this->getHelper('question');
-        $question = new ConfirmationQuestion("Remove the domain <comment>$name</comment> from the environment <info>{$this->app->name}:{$this->environment->name}</info> [y/N]? ", FALSE);
+        $question = new ConfirmationQuestion("Remove the domain <comment>$name</comment> from the environment <info>{$this->project->name}:{$this->environment->name}</info> [y/N]? ", FALSE);
 
         if (!$helper->ask($input, $output, $question)) {
             $output->writeln("<fg=red>Domain not removed.</>");
@@ -182,7 +182,7 @@ class EnvironmentDomains extends Command
         unset($this->environment->domains[$key]);
 
         // Save the new version to the config.
-        $this->getApplication()->getTerra()->getConfig()->add('projects', array($this->app->name, 'environments', $this->environment->name), (array) $this->environment);
+        $this->getApplication()->getTerra()->getConfig()->add('projects', array($this->project->name, 'environments', $this->environment->name), (array) $this->environment);
         $this->getApplication()->getTerra()->getConfig()->save();
         $output->writeln("<info>Domain removed.</info> Changes won't take effect until the environment is restarted.");
         $output->writeln('');

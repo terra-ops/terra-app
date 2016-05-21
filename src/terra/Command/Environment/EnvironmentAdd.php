@@ -26,7 +26,7 @@ class EnvironmentAdd extends Command
         ->addArgument(
             'app_name',
             InputArgument::OPTIONAL,
-            'The app you would like to add an environment for.'
+            'The project you would like to add an environment for.'
         )
         ->addArgument(
             'environment_name',
@@ -61,13 +61,13 @@ class EnvironmentAdd extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        // Ask for an app.
+        // Ask for an project.
         $helper = $this->getHelper('question');
         $this->getApp($input, $output);
 
         // Ask for environment name
         $environment_name = $input->getArgument('environment_name');
-        while (empty($environment_name) || isset($this->app->environments[$environment_name])) {
+        while (empty($environment_name) || isset($this->project->environments[$environment_name])) {
             $question = new Question('Environment name? ');
             $environment_name = $helper->ask($input, $output, $question);
 
@@ -79,8 +79,8 @@ class EnvironmentAdd extends Command
             }
 
             // Look for environment with this name.
-            if (isset($this->app->environments[$environment_name])) {
-                $output->writeln("<error> ERROR </error> Environment <comment>{$environment_name}</comment> already exists in app <comment>{$this->app->name}</comment>");
+            if (isset($this->project->environments[$environment_name])) {
+                $output->writeln("<error> ERROR </error> Environment <comment>{$environment_name}</comment> already exists in project <comment>{$this->project->name}</comment>");
             }
         }
 
@@ -93,7 +93,7 @@ class EnvironmentAdd extends Command
 
             // If it already exists, use "realpath" to load it.
             if (file_exists($config_path)) {
-              $default_path = realpath($config_path).'/'.$this->app->name.'/'.$environment_name;
+              $default_path = realpath($config_path).'/'.$this->project->name.'/'.$environment_name;
             }
             // If it doesn't exist, just use ~/Projects/$ENV as the default path.
             else {
@@ -102,7 +102,7 @@ class EnvironmentAdd extends Command
               $question = new ConfirmationQuestion("Default projects folder {$config_path} is missing.  Create it? [y\N] ", false);
               if ($helper->ask($input, $output, $question)) {
                 mkdir($config_path);
-                $default_path = $_SERVER['HOME'] . '/Projects/' . $this->app->name . '/' . $environment_name;
+                $default_path = $_SERVER['HOME'] . '/Projects/' . $this->project->name . '/' . $environment_name;
               }
             }
             if (!$input->getOption('yes')) {
@@ -133,7 +133,7 @@ class EnvironmentAdd extends Command
 
         // Environment object
         $environment = array(
-            'app' => $this->app->name,
+            'project' => $this->project->name,
             'name' => $environment_name,
             'path' => $path,
             'document_root' => '',
@@ -144,7 +144,7 @@ class EnvironmentAdd extends Command
 
         // Prepare the environment factory.
         // Clone the projects source code to the desired path.
-        $environmentFactory = new EnvironmentFactory($environment, $this->app);
+        $environmentFactory = new EnvironmentFactory($environment, $this->project);
 
         // Save environment to config.
         if ($environmentFactory->init($path)) {
@@ -161,7 +161,7 @@ class EnvironmentAdd extends Command
 
             $output->writeln('<info>Environment saved to registry.</info>');
         } else {
-            $output->writeln('<error>Unable to clone repository. Check app settings and try again.</error>');
+            $output->writeln('<error>Unable to clone repository. Check project settings and try again.</error>');
 
             return;
         }
@@ -172,7 +172,7 @@ class EnvironmentAdd extends Command
             // Run environment:enable command.
             $command = $this->getApplication()->find('environment:enable');
             $arguments = array(
-              'app_name' => $this->app->name,
+              'app_name' => $this->project->name,
               'environment_name' => $environment_name
             );
             $input = new ArrayInput($arguments);

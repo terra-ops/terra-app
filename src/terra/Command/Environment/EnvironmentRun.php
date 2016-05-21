@@ -25,7 +25,7 @@ class EnvironmentRun extends Command {
       ->addArgument(
         'app_name',
         InputArgument::REQUIRED,
-        'The name of the app'
+        'The name of the project'
       )
       ->addArgument(
         'environment_name',
@@ -35,7 +35,7 @@ class EnvironmentRun extends Command {
       ->addArgument(
         'service',
         InputArgument::REQUIRED,
-        'The name of the service to run command on. Can be load, app, database, drush, or more if you have added services to docker composer.'
+        'The name of the service to run command on. Can be load, project, database, drush, or more if you have added services to docker composer.'
       )
       ->addArgument(
         'commands',
@@ -46,11 +46,11 @@ class EnvironmentRun extends Command {
 
   protected function execute(InputInterface $input, OutputInterface $output) {
 
-    // Ask for an app and environment.
+    // Ask for an project and environment.
     $this->getApp($input, $output);
     $this->getEnvironment($input, $output);
 
-    $output->writeln('<info>App:</info> ' . $this->app->name);
+    $output->writeln('<info>Project:</info> ' . $this->project->name);
     $output->writeln('<info>Environment:</info> ' . $this->environment->name);
 
     $environment_factory = $this->getEnvironmentFactory();

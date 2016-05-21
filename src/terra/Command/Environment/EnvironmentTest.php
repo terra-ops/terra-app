@@ -29,7 +29,7 @@ class EnvironmentTest extends Command
         ->addArgument(
             'app_name',
             InputArgument::OPTIONAL,
-            'The name of the app.'
+            'The name of the project.'
         )
         ->addArgument(
             'environment_name',
@@ -48,11 +48,11 @@ class EnvironmentTest extends Command
     {
         $output->writeln('Hello Terra!');
 
-        // Ask for an app and environment.
+        // Ask for an project and environment.
         $this->getApp($input, $output);
         $this->getEnvironment($input, $output);
 
-        $environment_factory = new EnvironmentFactory($this->environment, $this->app);
+        $environment_factory = new EnvironmentFactory($this->environment, $this->project);
 
         $environment_factory->getConfig();
         if (isset($environment_factory->config['hooks']['test'])) {
@@ -74,7 +74,7 @@ class EnvironmentTest extends Command
         // Run the tests
         // @TODO: Move to factory.
 
-        $environment_factory = new EnvironmentFactory($this->environment, $this->app);
+        $environment_factory = new EnvironmentFactory($this->environment, $this->project);
 
         $output->writeln('<info>TERRA</info> | <comment>Test: Start...</comment>');
         $output->writeln('<info>TERRA</info> | ' . $environment_factory->config['hooks']['test']);
@@ -126,17 +126,17 @@ class EnvironmentTest extends Command
      */
     protected function executeBehatTests(InputInterface $input, OutputInterface $output) {
         $output->writeln('Running Behat Tests...');
-        $environment_factory = new EnvironmentFactory($this->environment, $this->app);
+        $environment_factory = new EnvironmentFactory($this->environment, $this->project);
         $environment_factory->getConfig();
 
         // 1. Look for behat.yml
         $behat_path = $this->environment->path . '/' . $environment_factory->config['behat_path'];
         $behat_yml_path = $behat_path . '/behat.yml';
         if (!file_exists($behat_path)) {
-            throw new \Exception("Path $behat_path not found. Check your app's .terra.yml file.");
+            throw new \Exception("Path $behat_path not found. Check your project's .terra.yml file.");
         }
         elseif (!file_exists($behat_yml_path)) {
-            throw new \Exception("Behat.yml file not found at $behat_yml_path. Check your app's .terra.yml file.");
+            throw new \Exception("Behat.yml file not found at $behat_yml_path. Check your project's .terra.yml file.");
         }
         $output->writeln('Found behat.yml file at ' . $behat_yml_path);
 

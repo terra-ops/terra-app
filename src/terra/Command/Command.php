@@ -75,14 +75,14 @@ class Command extends CommandBase
     }
 
     /**
-     * Helper to ask the user what app they want to work with.
+     * Helper to ask the user what project they want to work with.
      */
     public function getApp(InputInterface $input, OutputInterface $output)
     {
 
         // If there are no projects, end command.
         if (count($this->getApplication()->getTerra()->getConfig()->get('projects')) == 0) {
-            throw new \Exception('There are no projects to remove!. Use the command <info>terra app:add</info> to add your first app.');
+            throw new \Exception('There are no projects to remove!. Use the command <info>terra project:add</info> to add your first project.');
         }
 
         $helper = $this->getHelper('question');
@@ -96,7 +96,7 @@ class Command extends CommandBase
             }
 
             $question = new ChoiceQuestion(
-                'Which app? ',
+                'Which project? ',
                 $applications,
                 null
             );
@@ -105,28 +105,28 @@ class Command extends CommandBase
 
         // If still empty throw an exception.
         if (empty($app_name)) {
-            throw new \Exception("App '$app_name' not found.'");
+            throw new \Exception("Project '$app_name' not found.'");
         }
         else {
-            // Set the app for this command.
-            $this->app = (object) $this->getApplication()->getTerra()->getConfig()->get('projects', $app_name);
+            // Set the project for this command.
+            $this->project = (object) $this->getApplication()->getTerra()->getConfig()->get('projects', $app_name);
         }
     }
 
     /**
-     * Helper to ask the user what app they want to work with.
+     * Helper to ask the user what project they want to work with.
      */
     public function getEnvironment(InputInterface $input, OutputInterface $output)
     {
 
-        // If no app...
-        if (empty($this->app)) {
-            throw new \Exception('App not defined. Call Command::getApp() first.');
+        // If no project...
+        if (empty($this->project)) {
+            throw new \Exception('Project not defined. Call Command::getApp() first.');
         }
 
         // If no environments:
-        if (count(($this->app->environments)) == 0) {
-            $output->writeln("<comment>There are no environments for the app {$this->app->name}!</comment>");
+        if (count(($this->project->environments)) == 0) {
+            $output->writeln("<comment>There are no environments for the project {$this->project->name}!</comment>");
             $output->writeln('Use the command <info>terra environment:add</info> to add your first environment.');
             return;
         }
@@ -136,7 +136,7 @@ class Command extends CommandBase
 
         // If no environment name specified provide options
         if (empty($environment_name)) {
-            $environments = array_flip(array_keys($this->app->environments));
+            $environments = array_flip(array_keys($this->project->environments));
             foreach (array_keys($environments) as $env_key) {
               $environments[$env_key] = $env_key;
             }
@@ -149,7 +149,7 @@ class Command extends CommandBase
         }
 
         // Set the environment for this command.
-        $this->environment = (object) $this->app->environments[$environment_name];
+        $this->environment = (object) $this->project->environments[$environment_name];
     }
 
     /**
@@ -161,6 +161,6 @@ class Command extends CommandBase
      */
     public function getEnvironmentFactory()
     {
-      return new EnvironmentFactory($this->environment, $this->app);
+      return new EnvironmentFactory($this->environment, $this->project);
     }
 }

@@ -23,7 +23,7 @@ class EnvironmentRemove extends Command
         ->addArgument(
             'app_name',
             InputArgument::OPTIONAL,
-            'The name of the app to remove.'
+            'The name of the project to remove.'
         )
         ->addArgument(
             'environment_name',
@@ -34,7 +34,7 @@ class EnvironmentRemove extends Command
     }
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-      // Ask for an app and environment.
+      // Ask for an project and environment.
       $this->getApp($input, $output);
       $this->getEnvironment($input, $output);
 
@@ -43,10 +43,10 @@ class EnvironmentRemove extends Command
             return;
         }
       $environment_name = $this->environment->name;
-      $app_name = $this->app->name;
+      $app_name = $this->project->name;
       $helper = $this->getHelper('question');
 
-        // Confirm removal of the app.
+        // Confirm removal of the project.
         if (!$input->getOption('yes')) {
             $question = new ConfirmationQuestion("Are you sure you would like to remove the environment <question>$app_name:$environment_name</question>?  All files at {$this->environment->path} will be deleted, and all containers will be killed. [y/N] ", false);
         }
@@ -73,11 +73,11 @@ class EnvironmentRemove extends Command
             }
 
             // Destroy the environment
-            $environmentFactory = new EnvironmentFactory($this->environment, $this->app);
+            $environmentFactory = new EnvironmentFactory($this->environment, $this->project);
             $environmentFactory->destroy();
 
-            unset($this->app->environments[$environment_name]);
-            $this->getApplication()->getTerra()->getConfig()->add('projects', $app_name, (array) $this->app);
+            unset($this->project->environments[$environment_name]);
+            $this->getApplication()->getTerra()->getConfig()->add('projects', $app_name, (array) $this->project);
             $this->getApplication()->getTerra()->getConfig()->save();
 
             $output->writeln("<info>Environment $app_name:$environment_name has been removed.</info>");

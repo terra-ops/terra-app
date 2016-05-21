@@ -210,8 +210,8 @@ class Config implements ConfigurationInterface
         $environment = (object) $environment;
 
         $environment_config = (array) $environment;
-        unset($environment_config['app']);
-        $this->config['projects'][$environment->app]['environments'][$environment->name] = $environment_config;
+        unset($environment_config['project']);
+        $this->config['projects'][$environment->project]['environments'][$environment->name] = $environment_config;
     }
 
     /**

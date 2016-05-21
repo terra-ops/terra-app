@@ -20,7 +20,7 @@ class EnvironmentDisable extends Command
             ->addArgument(
                 'app_name',
                 InputArgument::OPTIONAL,
-                'The name of the app to disable.'
+                'The name of the project to disable.'
             )
             ->addArgument(
                 'environment_name',
@@ -32,15 +32,15 @@ class EnvironmentDisable extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        // Ask for an app and environment.
+        // Ask for an project and environment.
         $this->getApp($input, $output);
         $this->getEnvironment($input, $output);
 
         $environment_name = $this->environment->name;
-        $app_name = $this->app->name;
+        $app_name = $this->project->name;
 
         // Attempt to disable the environment.
-        $environment_factory = new EnvironmentFactory($this->environment, $this->app);
+        $environment_factory = new EnvironmentFactory($this->environment, $this->project);
         if (!$environment_factory->disable()) {
             $output->writeln('<error>Something went wrong, environment not disabled.</error>');
 
