@@ -25,7 +25,7 @@ class EnvironmentDomains extends Command
         ->setName('environment:domains')
         ->setDescription('Manage the Domains that are assigned to environments.')
         ->addArgument(
-            'app_name',
+            'project_name',
             InputArgument::OPTIONAL,
             'The project you would like manage the domains for.'
         )
@@ -49,10 +49,10 @@ class EnvironmentDomains extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         // Check if "project" argument is an action.
-        if ($input->getArgument('app_name') == 'add' || $input->getArgument('app_name') == 'remove') {
-            // Move argument from app_name to action
-            $input->setArgument('action', $input->getArgument('app_name'));
-            $input->setArgument('app_name', '');
+        if ($input->getArgument('project_name') == 'add' || $input->getArgument('project_name') == 'remove') {
+            // Move argument from project_name to action
+            $input->setArgument('action', $input->getArgument('project_name'));
+            $input->setArgument('project_name', '');
 
             // Move argument from env_name to domain
             $input->setArgument('domain', $input->getArgument('environment_name'));
@@ -102,7 +102,7 @@ class EnvironmentDomains extends Command
             // Run environment:enable command.
             $command = $this->getApplication()->find('environment:enable');
             $arguments = array(
-                'app_name' => $this->project->name,
+                'project_name' => $this->project->name,
                 'environment_name' => $this->environment->name,
             );
             $input = new ArrayInput($arguments);

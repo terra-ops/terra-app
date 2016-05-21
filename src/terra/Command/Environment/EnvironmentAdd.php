@@ -24,7 +24,7 @@ class EnvironmentAdd extends Command
         ->setName('environment:add')
         ->setDescription('Adds a new environment.')
         ->addArgument(
-            'app_name',
+            'project_name',
             InputArgument::OPTIONAL,
             'The project you would like to add an environment for.'
         )
@@ -172,7 +172,7 @@ class EnvironmentAdd extends Command
             // Run environment:enable command.
             $command = $this->getApplication()->find('environment:enable');
             $arguments = array(
-              'app_name' => $this->project->name,
+              'project_name' => $this->project->name,
               'environment_name' => $environment_name
             );
             $input = new ArrayInput($arguments);

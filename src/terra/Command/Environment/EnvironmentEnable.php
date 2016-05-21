@@ -18,7 +18,7 @@ class EnvironmentEnable extends Command
         ->setName('environment:enable')
         ->setDescription('Enable environment.')
         ->addArgument(
-            'app_name',
+            'project_name',
             InputArgument::OPTIONAL,
             'The name of the project to enable.'
         )

@@ -17,7 +17,7 @@ class AppRemove extends Command
         ->setName('project:remove')
         ->setDescription('Removes an project.')
         ->addArgument(
-            'app_name',
+            'project_name',
             InputArgument::OPTIONAL,
             'The name of the project to remove.'
         )

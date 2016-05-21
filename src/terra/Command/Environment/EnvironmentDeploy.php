@@ -18,7 +18,7 @@ class EnvironmentDeploy extends Command
         ->setName('environment:deploy')
         ->setDescription('Checkout a git ref for an environment and run deploy hooks.')
         ->addArgument(
-            'app_name',
+            'project_name',
             InputArgument::OPTIONAL,
             'The project to lookup.'
         )

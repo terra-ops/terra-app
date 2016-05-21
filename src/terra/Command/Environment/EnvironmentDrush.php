@@ -23,7 +23,7 @@ class EnvironmentDrush extends Command {
       ->setName('environment:drush')
       ->setDescription("Run a drush command on an environment's drush container.")
       ->addArgument(
-        'app_name',
+        'project_name',
         InputArgument::REQUIRED,
         'The name of the project'
       )

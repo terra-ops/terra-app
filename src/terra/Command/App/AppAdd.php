@@ -113,7 +113,7 @@ class AppAdd extends Command
           // Run environment:add command.
           $command = $this->getApplication()->find('environment:add');
           $arguments = array(
-            'app_name' => $app['name'],
+            'project_name' => $app['name'],
           );
           $input = new ArrayInput($arguments);
           $command->run($input, $output);

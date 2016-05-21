@@ -86,7 +86,7 @@ class Command extends CommandBase
         }
 
         $helper = $this->getHelper('question');
-        $app_name = $input->getArgument('app_name');
+        $app_name = $input->getArgument('project_name');
 
         // If no name specified provide options
         if (empty($app_name)) {

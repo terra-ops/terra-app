@@ -22,7 +22,7 @@ class EnvironmentRebuild extends Command
         ->setName('environment:rebuild')
         ->setDescription('Recreates and environment from the rebuild_source.')
         ->addArgument(
-            'app_name',
+            'project_name',
             InputArgument::OPTIONAL,
             'The name of the project to remove.'
         )

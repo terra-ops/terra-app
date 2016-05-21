@@ -28,7 +28,7 @@ class EnvironmentUpdate extends Command
         ->setName('environment:update')
         ->setDescription('Updates the codebase for an environment.')
         ->addArgument(
-            'app_name',
+            'project_name',
             InputArgument::OPTIONAL,
             'The name of the project.'
         )

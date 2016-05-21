@@ -27,7 +27,7 @@ class EnvironmentTest extends Command
         ->setName('environment:test')
         ->setDescription('Run tests on the environment.')
         ->addArgument(
-            'app_name',
+            'project_name',
             InputArgument::OPTIONAL,
             'The name of the project.'
         )

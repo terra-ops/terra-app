@@ -17,7 +17,7 @@ class Status extends Command
         ->setName('status')
         ->setDescription('Display the current status of the system, a machine, an project, or environment.')
         ->addArgument(
-            'app_name',
+            'project_name',
             InputArgument::OPTIONAL,
             'The name of the project to check the status of.'
         )
@@ -32,7 +32,7 @@ class Status extends Command
     {
         $output->writeln('Hello Terra!');
 
-        $app_name = $input->getArgument('app_name');
+        $app_name = $input->getArgument('project_name');
         $environment_name = $input->getArgument('environment_name');
 
         // Show system status
@@ -109,7 +109,7 @@ class Status extends Command
 //        else {
 //            // If an project name was chosen, run appStatus
 //            $formatter = $this->getHelper('formatter');
-//            $input->setArgument('app_name', $name);
+//            $input->setArgument('project_name', $name);
 //            $this->appStatus($input, $output);
 //
 //        }
@@ -124,7 +124,7 @@ class Status extends Command
      */
     protected function appStatus(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln('<info>Project:</info> ' . $input->getArgument('app_name'));
+        $output->writeln('<info>Project:</info> ' . $input->getArgument('project_name'));
       // If there are no projects, return
         if (count($this->getApplication()->getTerra()->getConfig()->get('projects')) == 0) {
             $output->writeln('<comment>There are no projects!</comment>');
@@ -133,7 +133,7 @@ class Status extends Command
             return;
         }
 
-        $app_name = strtr($input->getArgument('app_name'), array(
+        $app_name = strtr($input->getArgument('project_name'), array(
         '-' => '_',
         ));
 
@@ -208,7 +208,7 @@ class Status extends Command
             return;
         }
 
-        $app_name = $input->getArgument('app_name');
+        $app_name = $input->getArgument('project_name');
         $environment_name = $input->getArgument('environment_name');
 
         $app = $this->getApplication()->getTerra()->getConfig()->get('projects', $app_name);

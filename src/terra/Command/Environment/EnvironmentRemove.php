@@ -21,7 +21,7 @@ class EnvironmentRemove extends Command
         ->setName('environment:remove')
         ->setDescription('Removes an environment.')
         ->addArgument(
-            'app_name',
+            'project_name',
             InputArgument::OPTIONAL,
             'The name of the project to remove.'
         )

@@ -23,7 +23,7 @@ class EnvironmentRun extends Command {
       ->setName('environment:run')
       ->setDescription("Run a command on one of an environment's containers.")
       ->addArgument(
-        'app_name',
+        'project_name',
         InputArgument::REQUIRED,
         'The name of the project'
       )

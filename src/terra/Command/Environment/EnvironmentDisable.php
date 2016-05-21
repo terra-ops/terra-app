@@ -18,7 +18,7 @@ class EnvironmentDisable extends Command
             ->setName('environment:disable')
             ->setDescription('Disable environment.')
             ->addArgument(
-                'app_name',
+                'project_name',
                 InputArgument::OPTIONAL,
                 'The name of the project to disable.'
             )

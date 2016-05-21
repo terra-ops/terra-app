@@ -18,7 +18,7 @@ class EnvironmentScale extends Command
         ->setName('environment:scale')
         ->setDescription('Scale the project container.')
         ->addArgument(
-            'app_name',
+            'project_name',
             InputArgument::OPTIONAL,
             'The name of the project to enable.'
         )
