@@ -90,14 +90,14 @@ class Command extends CommandBase
 
         // If no name specified provide options
         if (empty($app_name)) {
-          $applications = array_flip(array_keys($this->getApplication()->getTerra()->getConfig()->get('projects')));
-          foreach (array_keys($applications) as $app_key) {
-              $applications[$app_key] = $app_key;
+          $projects = array_flip(array_keys($this->getApplication()->getTerra()->getConfig()->get('projects')));
+          foreach (array_keys($projects) as $app_key) {
+              $projects[$app_key] = $app_key;
             }
 
             $question = new ChoiceQuestion(
                 'Which project? ',
-                $applications,
+                $projects,
                 null
             );
             $app_name = $helper->ask($input, $output, $question);
