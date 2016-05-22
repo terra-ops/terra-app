@@ -9,7 +9,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Question\ChoiceQuestion;
 
-class AppRemove extends Command
+class ProjectRemove extends Command
 {
     protected function configure()
     {

@@ -52,8 +52,8 @@ class Application extends BaseApplication
     {
         $commands = parent::getDefaultCommands();
 
-        $commands[] = new Command\Project\AppAdd();
-        $commands[] = new Command\Project\AppRemove();
+        $commands[] = new Command\Project\ProjectAdd();
+        $commands[] = new Command\Project\ProjectRemove();
         $commands[] = new Command\Environment\EnvironmentAdd();
         $commands[] = new Command\Environment\EnvironmentRemove();
         $commands[] = new Command\Environment\EnvironmentEnable();
