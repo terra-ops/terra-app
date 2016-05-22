@@ -15,7 +15,7 @@ class ProjectRemove extends Command
     {
         $this
         ->setName('project:remove')
-        ->setDescription('Removes an project.')
+        ->setDescription('Removes a project.')
         ->addArgument(
             'project_name',
             InputArgument::OPTIONAL,

@@ -15,7 +15,7 @@ use Symfony\Component\Process\Process;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 
 /**
- * Service for an Project.
+ * Service for a project.
  */
 class EnvironmentFactory
 {

@@ -61,7 +61,7 @@ class EnvironmentAdd extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        // Ask for an project.
+        // Ask for a project.
         $helper = $this->getHelper('question');
         $this->getProject($input, $output);
 

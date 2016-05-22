@@ -50,7 +50,7 @@ class EnvironmentUpdate extends Command
         $output->writeln('Hello Terra!');
         $helper = $this->getHelper('question');
 
-        // Ask for an project and environment.
+        // Ask for a project and environment.
         $this->getProject($input, $output);
         $this->getEnvironment($input, $output);
 

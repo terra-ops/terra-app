@@ -15,7 +15,7 @@ class Status extends Command
     {
         $this
         ->setName('status')
-        ->setDescription('Display the current status of the system, a machine, an project, or environment.')
+        ->setDescription('Display the current status of the system, a machine, a project, or environment.')
         ->addArgument(
             'project_name',
             InputArgument::OPTIONAL,
@@ -38,7 +38,7 @@ class Status extends Command
         // Show system status
         if (empty($project_name) && empty($environment_name)) {
             $this->systemStatus($input, $output);
-        } // Show an project's status
+        } // Show a project's status
         elseif (empty($environment_name)) {
             $this->projectstatus($input, $output);
         } // Show an environment's status.
@@ -60,7 +60,7 @@ class Status extends Command
         $projects = $this->getApplication()->getTerra()->getConfig()->get('projects');
         if (empty($projects)) {
             $output->writeln('You have no projects!');
-            $question = new ConfirmationQuestion("Add an Project? [y\N] ", false);
+            $question = new ConfirmationQuestion("Add a project? [y\N] ", false);
             if ($helper->ask($input, $output, $question)) {
                 // Run environment:add command.
                 $command = $this->getApplication()->find('project:add');
@@ -107,7 +107,7 @@ class Status extends Command
 //            return;
 //        }
 //        else {
-//            // If an project name was chosen, run projectstatus
+//            // If a project name was chosen, run projectstatus
 //            $formatter = $this->getHelper('formatter');
 //            $input->setArgument('project_name', $name);
 //            $this->projectstatus($input, $output);
@@ -116,7 +116,7 @@ class Status extends Command
     }
 
     /**
-     * Outputs the status of an project.
+     * Outputs the status of a project.
      *
      * @param \Symfony\Component\Console\Input\InputInterface   $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output

@@ -59,7 +59,7 @@ class EnvironmentDomains extends Command
             $input->setArgument('environment_name', '');
         }
 
-        // Ask for an project.
+        // Ask for a project.
         $helper = $this->getHelper('question');
         $this->getProject($input, $output);
 

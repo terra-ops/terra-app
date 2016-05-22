@@ -46,7 +46,7 @@ class EnvironmentRun extends Command {
 
   protected function execute(InputInterface $input, OutputInterface $output) {
 
-    // Ask for an project and environment.
+    // Ask for a project and environment.
     $this->getProject($input, $output);
     $this->getEnvironment($input, $output);
 
