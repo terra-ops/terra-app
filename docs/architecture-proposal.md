@@ -13,7 +13,7 @@ Terra Command Line Interface
 This interface will allow you to create, alter, and remove all objects from an inventory:
 
 - Machines
-- Apps
+- Projects
 - Environments
 - Users
 
@@ -32,7 +32,7 @@ Dynamic Inventory
 
 A Terra "Dynamic Inventory" is a webservice that provides an ansible-compatible JSON endpoint.
 
-Users can authenticate against the webservice to be given a limited list of machines, apps and environments, based 
+Users can authenticate against the webservice to be given a limited list of machines, projects and environments, based 
 on the desired access control.
 
 Terra Drupal Modules
@@ -50,7 +50,7 @@ Proof of concepts: https://github.com/terra-ops/terra_ui_module
 
 ### terra_apps.module
 
-- Allows users to create apps and environments.
+- Allows users to create projects and environments.
 
 ### terra_inventory.module
 

@@ -21,7 +21,7 @@ Future Commands
 
 - `terra environment:scale`  *Complete*
 
-  This command will scale an environment to an arbitrary number, at the moment. It currently uses `docker-compose scale` to create additional "app" containers.  It automatically restarts the `load` container so that it includes the new containers in it's server list.
+  This command will scale an environment to an arbitrary number, at the moment. It currently uses `docker-compose scale` to create additional "project" containers.  It automatically restarts the `load` container so that it includes the new containers in it's server list.
 
   This command would only be possible with the `DockerEnvironmentFactory`, and would have to take on other forms for any other environment provider.
 

@@ -4,8 +4,8 @@
 # Get a list of terra commands
 terra
 
-# Create Terra app
-terra app:add drupal https://github.com/terra-ops/example-drupal
+# Create Terra project
+terra project:add drupal https://github.com/terra-ops/example-drupal
 
 # Create Terra environment
 terra environment:add drupal local
@@ -25,7 +25,7 @@ terra url-proxy:enable
 
 # Rebuild environment from another drupal site via drush alias
 
-# To rebuild from the source alias defined in your app's .terra.yml file:
+# To rebuild from the source alias defined in your project's .terra.yml file:
 #
 # .terra.yml:
 # |  rebuild_source: @source_alias
@@ -40,17 +40,17 @@ terra environment:drush PROJECT ENVIRONMENT status
 terra environment:drush PROJECT ENVIRONMENT uli
 
 # Run an arbitrary command inside any container.  
-# Services are from docker composer: load, app, database, drush.
+# Services are from docker composer: load, project, database, drush.
 terra environment:run PROJECT ENVIRONMENT SERVICE ping google.com
 
 # View logfiles
-docker logs drupallocal_app_1
+docker logs drupallocal_project_1
 
 # Show docker containers
 docker ps
 
 # SSH in to docker container
-docker exec -it drupallocal_app_1 bash
+docker exec -it drupallocal_project_1 bash
 
 # Kill docker container
 docker kill [name]

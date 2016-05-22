@@ -14,18 +14,18 @@ To get NuCivic's openFDA DKAN site running in Terra:
 2. Install docker-compose: https://docs.docker.com/compose/install/
 3. Install terra: http://terra.readthedocs.org/en/latest/install/
 4. Install drush: http://docs.drush.org/en/master/install/
-4. Add a terra app:
+4. Add a terra project:
 
-        $ terra app:add openfda https://github.com/NuCivic/data-openFDA.git --description="18F Agile BPA prototype"
+        $ terra project:add openfda https://github.com/NuCivic/data-openFDA.git --description="18F Agile BPA prototype"
          Name:        openopen                                    
          Description: 18F Agile BPA prototype                     
          Repo:        https://github.com/NuCivic/data-openFDA.git 
-        App saved
+        Project saved
 
 5. Add a terra environment:
 
-        $ terra environment:add openfda local ~/Apps/openfda-local
-        Cloning into '/home/jon/Apps/openfda-local'...
+        $ terra environment:add openfda local ~/Projects/openfda-local
+        Cloning into '/home/jon/Projects/openfda-local'...
         * master
         On branch master
         Your branch is up-to-date with 'origin/master'.
@@ -38,7 +38,7 @@ To get NuCivic's openFDA DKAN site running in Terra:
 
         $ terra environment:enable openfda local
         DOCKER > Recreating openfdalocal_database_1...
-        DOCKER > Recreating openfdalocal_app_1...
+        DOCKER > Recreating openfdalocal_project_1...
         DOCKER > Recreating openfdalocal_load_1...
         DOCKER > Recreating openfdalocal_drush_1...
         Environment enabled!  Available at http://openfda.local.localhost and http://localhost:32786
@@ -48,7 +48,7 @@ To get NuCivic's openFDA DKAN site running in Terra:
 
 7. Import the SQL database:
 
-        $ drush @openfda.local sqlc < /home/jon/Apps/openfda-local/openfda.sql
+        $ drush @openfda.local sqlc < /home/jon/Projects/openfda-local/openfda.sql
         
 8. Login to the site:
 

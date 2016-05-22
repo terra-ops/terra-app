@@ -44,7 +44,7 @@ docker_compose:
 
   # Overrides will replace any item in the entire docker-compose array.
   overrides:
-    app:
+    project:
       image: wordpress
       environment:
         WORDPRESS_DB_HOST: database
@@ -52,16 +52,16 @@ docker_compose:
         WORDPRESS_DB_NAME: drupal
         WORDPRESS_DB_PASSWORD: drupal
 
-  # App services are docker compose images.
+  # Project services are docker compose images.
   # They will be added as-is to the generated docker-compose.yml file,
-  # And attached automatically to the "app" container.
-  app_services:
+  # And attached automatically to the "project" container.
+  project_services:
     storage:
       image: mongo
 
-    # You can map a folder in an app_services container to a folder in your app by using {APP_PATH}
+    # You can map a folder in an project_services container to a folder in your project by using {PROJECT_PATH}
     solr:
       image: terra/solr
       volumes:
-        - '{APP_PATH}/solr-config:/opt/solr/server/solr/core/conf'
+        - '{PROJECT_PATH}/solr-config:/opt/solr/server/solr/core/conf'
 

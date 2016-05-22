@@ -3,12 +3,12 @@ Enabling Automatic Installation
 
 To get a drupal environment to fully instantiate and enable, you must add to .terra.yml's hooks.
 
-The app located at https://github.com/jonpugh/drupal-terra will be installed automatically upon environment enabling.
+The project located at https://github.com/jonpugh/drupal-terra will be installed automatically upon environment enabling.
 
-See https://github.com/jonpugh/drupal-terra/blob/master/.terra.yml for an example on how to get your app to 
+See https://github.com/jonpugh/drupal-terra/blob/master/.terra.yml for an example on how to get your project to
 install automatically.
 
-You can watch this app have an environment created here: https://www.youtube.com/watch?v=nNvTiEUXqFE
+You can watch this project have an environment created here: https://www.youtube.com/watch?v=nNvTiEUXqFE
 
 ![terra environment:add](images/terra-environment-enable-web.gif)
 
@@ -18,24 +18,24 @@ Setting up a Drupal Site
 How to get a drupal site running on Terra:
 
 1. Install Terra
-2. Add your first "app" using the `terra app:add` command.
+2. Add your first "project" using the `terra project:add` command.
 
     ```sh
-    you@localhost:~$ terra app:add 
+    you@localhost:~$ terra project:add 
     System name of your project? mysite
     Description? A cool site
     Source code repository URL? git@github.com:jonpugh/drupal.git
      Name:        mysite                            
      Description: A cool site                       
      Repo:        git@github.com:jonpugh/drupal.git 
-    App saved
+    Project saved
     ```
     
 3. Add your first environment using the `terra environment:add` command.
 
     ```sh
     you@localhost:~$ terra environment:add
-    Which app? 
+    Which project? 
       [0] mysite
     Environment Name: local
     Path: (/home/you/mysite/local)
@@ -51,14 +51,14 @@ How to get a drupal site running on Terra:
 
     ```sh
     terra environment:enable
-    Which app? 
+    Which project? 
       [0] mysite
      > 0
     Which environment? 
       [0] local
      > 0
     DOCKER > Creating mysitelocal_database_1...
-    DOCKER > Creating mysitelocal_app_1...
+    DOCKER > Creating mysitelocal_project_1...
     DOCKER > Creating mysitelocal_drush_1...
     Environment enabled!  Available at http://localhost:32768
     ```
@@ -90,6 +90,6 @@ How to get a drupal site running on Terra:
 Makefile Driven Development
 ===========================
 
-Using Terra's build hooks, you can use makefile for your app.
+Using Terra's build hooks, you can use makefile for your project.
 
 See the repo at https://github.com/jonpugh/drupal-terra for an example.

@@ -32,7 +32,7 @@ Example:
   
 5. Destroy any running containers you have for that image:
 
-        docker kill myappenvironment_app_1
+        docker kill myappenvironment_project_1
         
 6. Re-enable your environment and it will use the new terra/drupal image:
 

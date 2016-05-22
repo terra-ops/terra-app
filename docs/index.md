@@ -4,7 +4,7 @@
 
 ## About
 
-Terra is a suite of tools for the purpose of quickly and easily standing up web apps with Docker.
+Terra is a suite of tools for the purpose of quickly and easily standing up web projects with Docker.
 
 It is designed to be as simple as possible for developers, while being powerful enough to use in production at scale.
 
@@ -14,7 +14,7 @@ With Terra, all you care about is your site's code. Stop wasting time setting up
 
 Your .terra.yml file gives you tons of power.
 
-Check out a [sample .terra.yml file](https://github.com/terra-ops/terra-cli/blob/master/docs/.terra.yml) and put one in your app's source code.
+Check out a [sample .terra.yml file](https://github.com/terra-ops/terra-cli/blob/master/docs/.terra.yml) and put one in your project's source code.
 
 ## Community
 
@@ -53,9 +53,9 @@ Terra makes it quick and painless to manage your projects and environments.
 
 Push a button to get a testing infrastructure.
 
-## "Apps"
+## "Projects"
 
-An "App" is your website. It is the source code for your project.  Terra knows the git URL and (will) know the available branches and tags.  Terra will help you update your app from it's upstream repository using git.
+A "Project" is your website. It is the source code for your project.  Terra knows the git URL and (will) know the available branches and tags.  Terra will help you update your project from it's upstream repository using git.
 
 ## "Environment"
 
@@ -93,18 +93,18 @@ I am going to direct planning in an agile way as much as possible. Please post a
 ## Commands
 
 #### `terra status`
-  List all apps on this system.
+  List all projects on this system.
 
-#### `terra app:add` 
-  Add a new app to the system.
+#### `terra project:add` 
+  Add a new project to the system.
   
   Currently only Drupal sites are supported.
   
-#### `terra app:remove`
-  Remove an app from the system
+#### `terra project:remove`
+  Remove a project from the system
   
 #### `terra environment:add`
-  Add an environment for an app.
+  Add an environment for an project.
   
 #### `terra environment:remove`
   Remove an environment.
@@ -116,13 +116,13 @@ I am going to direct planning in an agile way as much as possible. Please post a
   Runs `docker-compose stop` to disable an environment.
   
 #### `terra environment:rebuild`
-  Looks in your app's .terra.yml file for `rebuild_source: @drushalias`.  Syncs the database, copies the files, then runs the rebuild hooks.
+  Looks in your project's .terra.yml file for `rebuild_source: @drushalias`.  Syncs the database, copies the files, then runs the rebuild hooks.
   
 #### `terra environment:status`
   Provides status information about an environment, including path and URL.
 
 #### `terra environment:scale`
-  Set the number of "app" containers.  This command is a wrapper for `docker compose app=5`.
+  Set the number of "project" containers.  This command is a wrapper for `docker compose project=5`.
 
 # Vagrant
 
@@ -140,7 +140,7 @@ Since the beginning we knew we had to let users tweak the stack.
 
 We also wanted it to just work, out of the box, so we created  "Default" docker-compose stack that you can see here: https://raw.githubusercontent.com/terra-ops/terra-cli/master/docs/docker-compose-example.yml
 
-We allow your app's source code to change its `docker-compose.yml` stack right now:
+We allow your project's source code to change its `docker-compose.yml` stack right now:
 
 ```.terra.yml
 
@@ -149,7 +149,7 @@ docker_compose:
 
   # Overrides will replace any item in the entire docker-compose array.
   overrides:
-    app:
+    project:
       image: wordpress
       links:
         - storage
@@ -161,11 +161,11 @@ docker_compose:
     storage:
       image: mongo
 ```
-This snippet, if put in your apps `.terra.yml` file, will replace the drupal container with  wordpress, and add & link a MongoDB container.
+This snippet, if put in your project's `.terra.yml` file, will replace the drupal container with  wordpress, and add & link a MongoDB container.
 
 Anything under "docker_compose: overrides:" is merged with the stock stack, which you can see here: https://raw.githubusercontent.com/terra-ops/terra-cli/master/docs/docker-compose-example.yml
 
-## Example Apps
+## Example Projects
 
 ### Drupal 7 Core
 
@@ -192,13 +192,13 @@ Simply prints the IP address to test scaling.
 https://github.com/terra-ops/example-scale
 
 **Symfony**
-Terra API is a symfony app.  Use it as an example.
+Terra API is a symfony project.  Use it as an example.
 https://github.com/terra-ops/terra-api
 
 
 ## Coding Standards
 
-As a symfony app, we are following PSR-2 Coding Standards.
+As a symfony project, we are following PSR-2 Coding Standards.
 
 Use 4 spaces for indentation, and follow all the other rules specified at http://www.php-fig.org/psr/psr-2/
 
@@ -210,9 +210,9 @@ We used Terra as the recommended method for recreating the site on another serve
 
 See the [instructions](example-setup.md) on setting up http://openfda.nucivic.build on another server using Terra.
 
-## Terra Apps
+## Terra Projects
 
-Each app you run with terra should have a `.terra.yml` file in the root.
+Each project you run with terra should have a `.terra.yml` file in the root.
 
 To see an example file, see https://github.com/terra-ops/terra-cli/blob/master/docs/.terra.yml
 
