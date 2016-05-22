@@ -37,7 +37,7 @@ class EnvironmentDisable extends Command
         $this->getEnvironment($input, $output);
 
         $environment_name = $this->environment->name;
-        $app_name = $this->project->name;
+        $project_name = $this->project->name;
 
         // Attempt to disable the environment.
         $environment_factory = new EnvironmentFactory($this->environment, $this->project);

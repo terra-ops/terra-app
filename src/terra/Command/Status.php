@@ -32,11 +32,11 @@ class Status extends Command
     {
         $output->writeln('Hello Terra!');
 
-        $app_name = $input->getArgument('project_name');
+        $project_name = $input->getArgument('project_name');
         $environment_name = $input->getArgument('environment_name');
 
         // Show system status
-        if (empty($app_name) && empty($environment_name)) {
+        if (empty($project_name) && empty($environment_name)) {
             $this->systemStatus($input, $output);
         } // Show an project's status
         elseif (empty($environment_name)) {
@@ -133,11 +133,11 @@ class Status extends Command
             return;
         }
 
-        $app_name = strtr($input->getArgument('project_name'), array(
+        $project_name = strtr($input->getArgument('project_name'), array(
         '-' => '_',
         ));
 
-        $app = $this->getApplication()->getTerra()->getConfig()->get('projects', $app_name);
+        $app = $this->getApplication()->getTerra()->getConfig()->get('projects', $project_name);
 
         if (empty($app)) {
             $output->writeln('<error>No project with that name! </error>');
@@ -208,10 +208,10 @@ class Status extends Command
             return;
         }
 
-        $app_name = $input->getArgument('project_name');
+        $project_name = $input->getArgument('project_name');
         $environment_name = $input->getArgument('environment_name');
 
-        $app = $this->getApplication()->getTerra()->getConfig()->get('projects', $app_name);
+        $app = $this->getApplication()->getTerra()->getConfig()->get('projects', $project_name);
 
         // If no environments:
         if (count(($app['environments'])) == 0) {
@@ -223,7 +223,7 @@ class Status extends Command
 
         // If no environment by that name...
         if (!isset($app['environments'][$environment_name])) {
-            $output->writeln("<error>There is no environment named {$environment_name} in the project {$app_name}</error>");
+            $output->writeln("<error>There is no environment named {$environment_name} in the project {$project_name}</error>");
 
             return;
         }

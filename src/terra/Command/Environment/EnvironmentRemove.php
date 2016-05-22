@@ -43,12 +43,12 @@ class EnvironmentRemove extends Command
             return;
         }
       $environment_name = $this->environment->name;
-      $app_name = $this->project->name;
+      $project_name = $this->project->name;
       $helper = $this->getHelper('question');
 
         // Confirm removal of the project.
         if (!$input->getOption('yes')) {
-            $question = new ConfirmationQuestion("Are you sure you would like to remove the environment <question>$app_name:$environment_name</question>?  All files at {$this->environment->path} will be deleted, and all containers will be killed. [y/N] ", false);
+            $question = new ConfirmationQuestion("Are you sure you would like to remove the environment <question>$project_name:$environment_name</question>?  All files at {$this->environment->path} will be deleted, and all containers will be killed. [y/N] ", false);
         }
         else {
             $output->writeln("<info>Running with --yes flag. Skipping confirmation step.</info>");
@@ -67,7 +67,7 @@ class EnvironmentRemove extends Command
                 $fs->remove(array(
                   $this->environment->path,
                 ));
-                $output->writeln("<info>Files for environment $app_name:$environment_name has been deleted.</info>");
+                $output->writeln("<info>Files for environment $project_name:$environment_name has been deleted.</info>");
             } catch (IOExceptionInterface $e) {
                 $output->writeln('<error>Unable to remove '.$e->getPath().'</error>');
             }
@@ -77,10 +77,10 @@ class EnvironmentRemove extends Command
             $environmentFactory->destroy();
 
             unset($this->project->environments[$environment_name]);
-            $this->getApplication()->getTerra()->getConfig()->add('projects', $app_name, (array) $this->project);
+            $this->getApplication()->getTerra()->getConfig()->add('projects', $project_name, (array) $this->project);
             $this->getApplication()->getTerra()->getConfig()->save();
 
-            $output->writeln("<info>Environment $app_name:$environment_name has been removed.</info>");
+            $output->writeln("<info>Environment $project_name:$environment_name has been removed.</info>");
         }
     }
 }

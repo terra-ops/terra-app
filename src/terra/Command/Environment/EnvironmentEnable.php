@@ -37,7 +37,7 @@ class EnvironmentEnable extends Command
         $this->getEnvironment($input, $output);
 
         $environment_name = $this->environment->name;
-        $app_name = $this->project->name;
+        $project_name = $this->project->name;
 
         // Attempt to enable the environment.
         $environment_factory = new EnvironmentFactory($this->environment, $this->project);
@@ -53,7 +53,7 @@ class EnvironmentEnable extends Command
         $this->environment->url = "http://$host:$port";
 
         // When passing to saveEnvironment, it must have project and name properties (for now).
-        $this->environment->project = $app_name;
+        $this->environment->project = $project_name;
         $this->environment->name = $environment_name;
 
         // Save environment metadata.
@@ -65,7 +65,7 @@ class EnvironmentEnable extends Command
         }
 
         // Write drush alias.
-        $drush_alias_file_path = "{$_SERVER['HOME']}/.drush/{$app_name}.aliases.drushrc.php";
+        $drush_alias_file_path = "{$_SERVER['HOME']}/.drush/{$project_name}.aliases.drushrc.php";
         if ($environment_factory->writeDrushAlias()) {
             $output->writeln("<info>Drush alias file created at {$drush_alias_file_path}</info>");
             $output->writeln("Wrote drush alias file to <comment>$drush_alias_file_path</comment>");

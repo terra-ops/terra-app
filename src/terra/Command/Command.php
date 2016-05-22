@@ -86,13 +86,13 @@ class Command extends CommandBase
         }
 
         $helper = $this->getHelper('question');
-        $app_name = $input->getArgument('project_name');
+        $project_name = $input->getArgument('project_name');
 
         // If no name specified provide options
-        if (empty($app_name)) {
+        if (empty($project_name)) {
           $projects = array_flip(array_keys($this->getApplication()->getTerra()->getConfig()->get('projects')));
-          foreach (array_keys($projects) as $app_key) {
-              $projects[$app_key] = $app_key;
+          foreach (array_keys($projects) as $project_key) {
+              $projects[$project_key] = $project_key;
             }
 
             $question = new ChoiceQuestion(
@@ -100,16 +100,16 @@ class Command extends CommandBase
                 $projects,
                 null
             );
-            $app_name = $helper->ask($input, $output, $question);
+            $project_name = $helper->ask($input, $output, $question);
         }
 
         // If still empty throw an exception.
-        if (empty($app_name)) {
-            throw new \Exception("Project '$app_name' not found.'");
+        if (empty($project_name)) {
+            throw new \Exception("Project '$project_name' not found.'");
         }
         else {
             // Set the project for this command.
-            $this->project = (object) $this->getApplication()->getTerra()->getConfig()->get('projects', $app_name);
+            $this->project = (object) $this->getApplication()->getTerra()->getConfig()->get('projects', $project_name);
         }
     }
 

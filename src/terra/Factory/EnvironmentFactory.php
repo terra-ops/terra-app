@@ -609,8 +609,8 @@ $this->environment->name;
         }
         $container_list = trim($process->getOutput());
         $lines = explode(PHP_EOL, $container_list);
-        $app_scale = count($lines);
-        return $app_scale;
+        $project_scale = count($lines);
+        return $project_scale;
     }
 
     /**

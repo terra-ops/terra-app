@@ -44,13 +44,13 @@ class EnvironmentScale extends Command
         $this->getEnvironment($input, $output);
 
         $environment_name = $this->environment->name;
-        $app_name = $this->project->name;
+        $project_name = $this->project->name;
 
         $environment_factory = new EnvironmentFactory($this->environment, $this->project);
         $environment_factory->writeConfig();
         $current_scale = $environment_factory->getScale();
 
-        $output->writeln("Scaling Environment <comment>{$app_name} {$environment_name}</comment>...");
+        $output->writeln("Scaling Environment <comment>{$project_name} {$environment_name}</comment>...");
         $output->writeln("Current scale: <comment>{$current_scale}</comment>");
 
         // If no scale ask for scale.
@@ -65,7 +65,7 @@ class EnvironmentScale extends Command
 
         $environment_factory->scale($scale);
 
-        $output->writeln("Environment <comment>{$app_name} {$environment_name}</comment> scaled to <info>{$scale}</info>");
+        $output->writeln("Environment <comment>{$project_name} {$environment_name}</comment> scaled to <info>{$scale}</info>");
 
         // Output the new URL.
         $local_url = 'http://'. $environment_factory->getHost() . ':' . $environment_factory->getPort();
