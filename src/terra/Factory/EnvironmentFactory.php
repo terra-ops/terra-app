@@ -372,10 +372,10 @@ $this->environment->name;
             ),
         );
 
-        // Add "app_services": Additional containers linked to the project container.
+        // Add "project_services": Additional containers linked to the project container.
         $this->getConfig();
-        if (isset($this->config['docker_compose']['app_services']) && is_array($this->config['docker_compose']['app_services'])) {
-            foreach ($this->config['docker_compose']['app_services'] as $service => $info) {
+        if (isset($this->config['docker_compose']['project_services']) && is_array($this->config['docker_compose']['project_services'])) {
+            foreach ($this->config['docker_compose']['project_services'] as $service => $info) {
                 $compose['project']['links'][] = $service;
 
                 // Look for volume paths to change
