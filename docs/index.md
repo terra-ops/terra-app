@@ -104,7 +104,7 @@ I am going to direct planning in an agile way as much as possible. Please post a
   Remove a project from the system
   
 #### `terra environment:add`
-  Add an environment for an project.
+  Add an environment for a project.
   
 #### `terra environment:remove`
   Remove an environment.
