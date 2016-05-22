@@ -15,7 +15,7 @@ use terra\Factory\EnvironmentFactory;
  */
 class Command extends CommandBase
 {
-    protected $app;
+    protected $project;
     protected $environment;
 
     /**

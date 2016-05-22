@@ -28,7 +28,7 @@ class EnvironmentFactory
      *
      * @var string
      */
-    public $app;
+    public $project;
 
     /**
      * The name of this environment.
@@ -39,12 +39,12 @@ class EnvironmentFactory
 
     /**
      * @param $environment
-     * @param $app
+     * @param $project
      */
-    public function __construct($environment, $app)
+    public function __construct($environment, $project)
     {
         $this->environment = (object) $environment;
-        $this->project = (object) $app;
+        $this->project = (object) $project;
         $this->name = $this->environment->name;
     }
 

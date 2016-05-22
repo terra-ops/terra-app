@@ -87,13 +87,13 @@ class AppAdd extends Command
         $formattedBlock = $formatter->formatBlock($lines, 'fg=black;bg=green');
         $output->writeln($formattedBlock);
 
-        $app = array(
+        $project = array(
           'name' => $name,
             'description' => $description,
             'repo' => $repo,
             'host' => $host
         );
-        $this->getApplication()->getTerra()->getConfig()->add('projects', $name, $app);
+        $this->getApplication()->getTerra()->getConfig()->add('projects', $name, $project);
 
         if ($this->getApplication()->getTerra()->getConfig()->save()) {
             $output->writeln('<info>Project saved</info>');
@@ -113,7 +113,7 @@ class AppAdd extends Command
           // Run environment:add command.
           $command = $this->getApplication()->find('environment:add');
           $arguments = array(
-            'project_name' => $app['name'],
+            'project_name' => $project['name'],
           );
           $input = new ArrayInput($arguments);
           $command->run($input, $output);

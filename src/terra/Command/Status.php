@@ -83,14 +83,14 @@ class Status extends Command
         foreach ($this->getApplication()
                ->getTerra()
                ->getConfig()
-               ->get('projects') as $app) {
+               ->get('projects') as $project) {
 
-            $options[] = $app['name'];
+            $options[] = $project['name'];
             $row = array(
-            $app['name'],
-            $app['description'],
-            $app['repo'],
-            is_array($app['environments']) ? implode(', ', array_keys($app['environments'])) : 'None',
+            $project['name'],
+            $project['description'],
+            $project['repo'],
+            is_array($project['environments']) ? implode(', ', array_keys($project['environments'])) : 'None',
             );
             $rows[] = $row;
         }
@@ -120,7 +120,7 @@ class Status extends Command
      *
      * @param \Symfony\Component\Console\Input\InputInterface   $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @param $app
+     * @param $project
      */
     protected function projectstatus(InputInterface $input, OutputInterface $output)
     {
@@ -137,16 +137,16 @@ class Status extends Command
         '-' => '_',
         ));
 
-        $app = $this->getApplication()->getTerra()->getConfig()->get('projects', $project_name);
+        $project = $this->getApplication()->getTerra()->getConfig()->get('projects', $project_name);
 
-        if (empty($app)) {
+        if (empty($project)) {
             $output->writeln('<error>No project with that name! </error>');
 
             return 1;
         }
 
         // If no environments:
-        if (count(($app['environments'])) == 0) {
+        if (count(($project['environments'])) == 0) {
             $output->writeln('<comment>There are no environments!</comment>');
             $output->writeln('Use the command <info>terra environment:add</info> to add your first environment.');
 
@@ -163,9 +163,9 @@ class Status extends Command
 
         $rows = array();
 
-        foreach ($app['environments'] as $environment) {
+        foreach ($project['environments'] as $environment) {
             // @TODO: Detect if URL proxy is online
-            $environment_factory = new EnvironmentFactory($environment, $app);
+            $environment_factory = new EnvironmentFactory($environment, $project);
 
             // Build list of domains.
             $environment['domains'][] = 'http://'. $environment_factory->getHost() . ':' . $environment_factory->getPort();
@@ -193,7 +193,7 @@ class Status extends Command
      *
      * @param \Symfony\Component\Console\Input\InputInterface   $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @param $app
+     * @param $project
      * @param $environment
      *
      */
@@ -211,10 +211,10 @@ class Status extends Command
         $project_name = $input->getArgument('project_name');
         $environment_name = $input->getArgument('environment_name');
 
-        $app = $this->getApplication()->getTerra()->getConfig()->get('projects', $project_name);
+        $project = $this->getApplication()->getTerra()->getConfig()->get('projects', $project_name);
 
         // If no environments:
-        if (count(($app['environments'])) == 0) {
+        if (count(($project['environments'])) == 0) {
             $output->writeln('<comment>There are no environments!</comment>');
             $output->writeln('Use the command <info>terra environment:add</info> to add your first environment.');
 
@@ -222,14 +222,14 @@ class Status extends Command
         }
 
         // If no environment by that name...
-        if (!isset($app['environments'][$environment_name])) {
+        if (!isset($project['environments'][$environment_name])) {
             $output->writeln("<error>There is no environment named {$environment_name} in the project {$project_name}</error>");
 
             return;
         }
 
-        $environment = $app['environments'][$environment_name];
-        $environment_factory = new EnvironmentFactory($environment, $app);
+        $environment = $project['environments'][$environment_name];
+        $environment_factory = new EnvironmentFactory($environment, $project);
 
         $environment['scale'] = $environment_factory->getScale();
         $environment['url'] = 'http://'. $environment_factory->getHost() . ':' . $environment_factory->getPort();
