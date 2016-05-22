@@ -382,7 +382,7 @@ $this->environment->name;
                 if (isset($info['volumes'])) {
                     foreach ($info['volumes'] as &$volume) {
                         $volume = strtr($volume, array(
-                          '{APP_PATH}' => $source_root,
+                          '{PROJECT_PATH}' => $source_root,
                         ));
                     }
                 }
