@@ -27,7 +27,7 @@ class AppRemove extends Command
     {
 
         $helper = $this->getHelper('question');
-        $this->getApp($input, $output);
+        $this->getProject($input, $output);
         $name = $this->project->name;
 
         // Confirm removal of the project.

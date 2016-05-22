@@ -61,7 +61,7 @@ class EnvironmentDomains extends Command
 
         // Ask for an project.
         $helper = $this->getHelper('question');
-        $this->getApp($input, $output);
+        $this->getProject($input, $output);
 
         // Ask for an environment.
         $helper = $this->getHelper('question');

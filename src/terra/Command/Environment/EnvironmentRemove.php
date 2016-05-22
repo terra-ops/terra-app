@@ -35,7 +35,7 @@ class EnvironmentRemove extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
       // Ask for an project and environment.
-      $this->getApp($input, $output);
+      $this->getProject($input, $output);
       $this->getEnvironment($input, $output);
 
         // Don't continue unless we have an environment.

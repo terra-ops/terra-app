@@ -49,7 +49,7 @@ class EnvironmentTest extends Command
         $output->writeln('Hello Terra!');
 
         // Ask for an project and environment.
-        $this->getApp($input, $output);
+        $this->getProject($input, $output);
         $this->getEnvironment($input, $output);
 
         $environment_factory = new EnvironmentFactory($this->environment, $this->project);

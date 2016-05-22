@@ -39,7 +39,7 @@ class EnvironmentDeploy extends Command
     {
 
         // Ask for an project and environment.
-        $this->getApp($input, $output);
+        $this->getProject($input, $output);
         $this->getEnvironment($input, $output);
 
         // Get desired version.

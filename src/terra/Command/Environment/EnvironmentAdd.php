@@ -63,7 +63,7 @@ class EnvironmentAdd extends Command
     {
         // Ask for an project.
         $helper = $this->getHelper('question');
-        $this->getApp($input, $output);
+        $this->getProject($input, $output);
 
         // Ask for environment name
         $environment_name = $input->getArgument('environment_name');

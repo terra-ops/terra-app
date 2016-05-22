@@ -42,7 +42,7 @@ class EnvironmentDrush extends Command {
   protected function execute(InputInterface $input, OutputInterface $output) {
 
     // Ask for an project and environment.
-    $this->getApp($input, $output);
+    $this->getProject($input, $output);
     $this->getEnvironment($input, $output);
 
     $environment_factory = $this->getEnvironmentFactory();

@@ -77,7 +77,7 @@ class Command extends CommandBase
     /**
      * Helper to ask the user what project they want to work with.
      */
-    public function getApp(InputInterface $input, OutputInterface $output)
+    public function getProject(InputInterface $input, OutputInterface $output)
     {
 
         // If there are no projects, end command.
@@ -121,7 +121,7 @@ class Command extends CommandBase
 
         // If no project...
         if (empty($this->project)) {
-            throw new \Exception('Project not defined. Call Command::getApp() first.');
+            throw new \Exception('Project not defined. Call Command::getProject() first.');
         }
 
         // If no environments:
