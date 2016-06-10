@@ -61,7 +61,7 @@ class EnvironmentRemove extends Command
             // @TODO: Move this to EnvironmentFactory class
 
             // Remove files if the user wants us to.
-            $question = new ConfirmationQuestion("Would you like to remove all files for environment <question>$app_name:$environment_name</question>? [y/N] ", false);
+            $question = new ConfirmationQuestion("Would you like to delete all files at <question>{$this->environment->path}</question>? [y/N] ", false);
             if ($helper->ask($input, $output, $question)) {
                 $fs = new Filesystem();
 
@@ -69,7 +69,7 @@ class EnvironmentRemove extends Command
                     $fs->remove(array(
                       $this->environment->path,
                     ));
-                    $output->writeln("<info>Files for environment $app_name:$environment_name has been deleted.</info>");
+                    $output->writeln("<info>Files for environment $app_name:$environment_name have been deleted.</info>");
                 } catch (IOExceptionInterface $e) {
                     $output->writeln('<error>Unable to remove '.$e->getPath().'</error>');
                 }
