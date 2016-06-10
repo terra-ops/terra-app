@@ -48,7 +48,7 @@ class EnvironmentRemove extends Command
 
         // Confirm removal of the app.
         if (!$input->getOption('yes')) {
-            $question = new ConfirmationQuestion("Are you sure you would like to remove the environment <question>$app_name:$environment_name</question>?  All files at {$this->environment->path} will be deleted, and all containers will be killed. [y/N] ", false);
+            $question = new ConfirmationQuestion("Are you sure you would like to remove the containers for environment <question>$app_name:$environment_name</question>? [y/N] ", false);
         }
         else {
             $output->writeln("<info>Running with --yes flag. Skipping confirmation step.</info>");
@@ -60,16 +60,19 @@ class EnvironmentRemove extends Command
             // Remove the environment from config registry.
             // @TODO: Move this to EnvironmentFactory class
 
-            // Remove files
-            $fs = new Filesystem();
+            // Remove files if the user wants us to.
+            $question = new ConfirmationQuestion("Would you like to remove all files for environment <question>$app_name:$environment_name</question>? [y/N] ", false);
+            if ($helper->ask($input, $output, $question)) {
+                $fs = new Filesystem();
 
-            try {
-                $fs->remove(array(
-                  $this->environment->path,
-                ));
-                $output->writeln("<info>Files for environment $app_name:$environment_name has been deleted.</info>");
-            } catch (IOExceptionInterface $e) {
-                $output->writeln('<error>Unable to remove '.$e->getPath().'</error>');
+                try {
+                    $fs->remove(array(
+                      $this->environment->path,
+                    ));
+                    $output->writeln("<info>Files for environment $app_name:$environment_name has been deleted.</info>");
+                } catch (IOExceptionInterface $e) {
+                    $output->writeln('<error>Unable to remove '.$e->getPath().'</error>');
+                }
             }
 
             // Destroy the environment
