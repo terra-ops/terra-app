@@ -279,6 +279,9 @@ class EnvironmentFactory
     {
         $this->getConfig();
 
+        // Determine format for load port
+        $load_port = isset($this->environment->port) ? "{$this->environment->port}:80" : 80;
+
         $source_root = $this->environment->path;
 
         if (!empty($this->config['document_root'])) {
@@ -322,7 +325,7 @@ $this->environment->name;
                 '80/tcp',
             ),
             'ports' => array(
-                '80',
+                $load_port,
             ),
         );
         $compose['app'] = array(
@@ -711,6 +714,22 @@ $this->environment->name;
             return true;
         } catch (IOExceptionInterface $e) {
             return false;
+        }
+    }
+
+    /**
+     * Looks through config for available ports...
+     *
+     * Still figuring this out...
+     */
+    public function getAvailablePort()
+    {
+        $start = 50000;
+        $this->getConfig();
+        foreach ($this->config['apps'] as $app) {
+            foreach ($app['environments'] as $environment) {
+
+            }
         }
     }
 }
