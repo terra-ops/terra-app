@@ -7,7 +7,8 @@ namespace terra;
  */
 class Terra
 {
-    const VERSION = '0.x';
+    const NAME = 'Terra CLI';
+    const VERSION = '1.x';
 
     /**
      * Holds Terra configuration settings.

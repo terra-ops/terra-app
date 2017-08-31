@@ -42,7 +42,7 @@ class Application extends BaseApplication
      */
     public function __construct($name = 'UNKNOWN', $version = 'UNKNOWN')
     {
-        parent::__construct('Terra', Terra::VERSION);
+        parent::__construct(Terra::NAME, Terra::VERSION);
     }
 
     /**

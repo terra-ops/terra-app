@@ -17,7 +17,15 @@ if (file_exists(__DIR__ . '/../vendor/autoload.php')) {
         'php composer.phar install' . PHP_EOL;
 }
 
-use terra\Console\Application;
+$coreCommandClasses = [
+    \terra\Command\AppCommands::class,
+];
 
-$application = new Application('terra', '@package_version@');
-$application->run();
+$statusCode = \terra\Robo::run(
+  $_SERVER['argv'],
+  $coreCommandClasses,
+  \terra\Terra::NAME,
+  \terra\Terra::VERSION
+);
+
+exit($statusCode);

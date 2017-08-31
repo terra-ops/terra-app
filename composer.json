@@ -5,6 +5,7 @@
     "license": "GPL-2.0",
     "require": {
         "php": ">=5.5.9",
+        "consolidation/Robo": "~1",
         "symfony/config": "~2.6",
         "symfony/console": "~2.6",
         "symfony/filesystem": "~2.6",
