@@ -80,6 +80,16 @@ class EnvironmentEnable extends Command
             $output->writeln('<error>Unable to save drush alias.</error>');
         }
 
+        // Write Drupal Console site targets.
+        $console_target_file_path = "{$_SERVER['HOME']}/.console/sites/terra.{$app_name}.yml";
+        if ($environment_factory->writeConsoleSiteTargets()) {
+            $output->writeln("<info>Drupal Console site file created at {$console_target_file_path}</info>");
+            $output->writeln("Wrote Drupal Console site file to <comment>$console_target_file_path</comment>");
+            $output->writeln("Use <info>drupal {$environment_factory->getDrushAlias()}</info> to access the site.");
+        } else {
+            $output->writeln('<error>Unable to save Drupal Console site target.</error>');
+        }
+
         // Run the enable hooks
         $output->writeln('');
         $output->writeln('Running <comment>ENABLE</comment> app hook...');
