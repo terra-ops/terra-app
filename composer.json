@@ -13,7 +13,8 @@
         "cpliakas/git-wrapper": "~1.4",
         "teqneers/php-stream-wrapper-for-git": "~1.0",
         "videlalvaro/php-amqplib": "2.2.*",
-        "guzzlehttp/guzzle": "~6.0"
+        "guzzlehttp/guzzle": "~6.0",
+        "drush/drush": "^8.1"
     },
     "authors": [
         {

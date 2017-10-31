@@ -4,6 +4,7 @@ namespace terra\Command\Environment;
 
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use terra\Command\Command;
 
@@ -30,6 +31,13 @@ class EnvironmentShell extends Command
             'The service to enter into. Default: app',
             'app'
         )
+        ->addOption(
+            'user',
+            'u',
+            InputOption::VALUE_OPTIONAL,
+            'The user to enter into. Default: terra',
+            'terra'
+        )
         ;
     }
 
@@ -39,7 +47,8 @@ class EnvironmentShell extends Command
       $this->getEnvironment($input, $output);
       $dir = $this->getEnvironmentFactory()->getDockerComposePath();
       $service = $input->getArgument('service');
-      $cmd = "docker-compose exec $service bash";
+      $user = $input->getOption('user');
+      $cmd = "docker-compose exec --user $user $service bash";
       $output->writeln("Running '$cmd' in $dir");
   
       $process = new \Symfony\Component\Process\Process($cmd);

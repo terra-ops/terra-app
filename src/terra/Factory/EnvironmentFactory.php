@@ -310,38 +310,22 @@ class EnvironmentFactory
 $this->environment->name;
 
         $compose = array();
-        $compose['load'] = array(
-            'image' => 'tutum/haproxy',
+        $compose['app'] = array(
+            'image' => 'terra/drupal:local',
+            'hostname' => $this->app->name . '_' . $this->environment->name . '.app',
+            'tty' => true,
+            'stdin_open' => true,
+            'volumes' => array(
+                "{$this->environment->path}:/app:z",
+                "{$this->environment->path}/{$document_root_relative}:/var/www/html:z",
+            ),
             'environment' => array(
-                'VIRTUAL_HOST' => $hosts,
-            ),
-            'links' => array(
-                'app',
-            ),
-            'expose' => array(
-                '80/tcp',
+              'VIRTUAL_HOST' => $hosts,
+              'DOCUMENT_ROOT' => $document_root_relative,
+              'VIRTUAL_HOSTNAME' => $this->getUrl(),
             ),
             'ports' => array(
                 '80',
-            ),
-        );
-        $compose['app'] = array(
-            'image' => 'terra/drupal',
-            'tty' => true,
-            'stdin_open' => true,
-            'links' => array(
-                'database',
-            ),
-            'volumes' => array(
-                "{$this->environment->path}:/app:Z",
-            ),
-            'environment' => array(
-                'HOST_UID' => posix_getuid(),
-                'HOST_GID' => posix_getgid(),
-                'DOCUMENT_ROOT' => $document_root_relative,
-            ),
-            'expose' => array(
-                '80/tcp',
             ),
         );
         $compose['database'] = array(
@@ -354,9 +338,13 @@ $this->environment->name;
                 'MYSQL_USER' => 'drupal',
                 'MYSQL_PASSWORD' => 'drupal',
             ),
+            'logging' => array(
+              'driver' => 'none',
+            ),
         );
         $compose['drush'] = array(
-            'image' => 'terra/drush',
+            'image' => 'terra/drush:local',
+          'hostname' => $this->app->name . '_' . $this->environment->name . '.drush',
             'tty' => true,
             'stdin_open' => true,
             'links' => array(
@@ -427,7 +415,11 @@ $this->environment->name;
             $compose[$name]['labels']['io.rancher.container.network'] = 'TRUE';
         }
 
-        return $compose;
+        # Output docker-compose v2 yaml.
+        return array(
+          'version' => '2',
+          'services' => $compose,
+        );
     }
 
     /**
@@ -543,13 +535,13 @@ $this->environment->name;
     }
 
     /**
-     * Get's the exposed port of the load balancer container.
+     * Get's the exposed port of the app container.
      *
      * @return bool|mixed
      */
     public function getPort()
     {
-        $process = new Process('docker-compose port load 80', $this->getDockerComposePath());
+        $process = new Process('docker-compose port app 80', $this->getDockerComposePath());
         $process->run();
         if (!$process->isSuccessful()) {
             return false;
@@ -633,7 +625,7 @@ $this->environment->name;
             $drush_alias_file[] = "  'uri' => '{$factory->getHost()}:{$factory->getPort()}',";
             $drush_alias_file[] = "  'root' => '$path',";
             $drush_alias_file[] = "  'remote-host' => '{$factory->getHost()}',";
-            $drush_alias_file[] = "  'remote-user' => 'terra',";
+            $drush_alias_file[] = "  'remote-user' => 'drush',";
             $drush_alias_file[] = "  'ssh-options' => '-p {$factory->getDrushPort()}',";
             $drush_alias_file[] = ');';
         }

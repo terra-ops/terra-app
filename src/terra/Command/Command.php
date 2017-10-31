@@ -18,6 +18,16 @@ class Command extends CommandBase
 {
     protected $app;
     protected $environment;
+  
+    /**
+     * @var InputInterface
+     */
+    protected $input;
+  
+    /**
+     * @var OutputInterface
+     */
+    protected $output;
 
     /**
      * Detect app and environment from current path.
@@ -27,6 +37,10 @@ class Command extends CommandBase
      */
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
+        // Set Input and output
+        $this->input = $input;
+        $this->output = $output;
+      
         // Determine app and environment from path.
         $cwd = getcwd();
         $config = $this->getApplication()->getTerra()->getConfig();
@@ -198,5 +212,12 @@ class Command extends CommandBase
     public function getEnvironmentFactory()
     {
       return new EnvironmentFactory($this->environment, $this->app);
+    }
+  
+    /**
+     * Confirm with the user, then Run a process and output the results.
+     */
+    public function exec($cmd) {
+    
     }
 }

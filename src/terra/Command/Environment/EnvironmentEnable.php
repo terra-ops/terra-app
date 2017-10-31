@@ -116,26 +116,22 @@ class EnvironmentEnable extends Command
      */
     protected function ensureProxy(InputInterface $input, OutputInterface $output)
     {
-        // Get running containers.
-        $cmd = 'docker ps';
+        // Lookup info on terra-nginx-proxy
+        $cmd = 'docker inspect terra-nginx-proxy';
         $process = new Process($cmd);
         $process->run();
 
-        if (!$process->isSuccessful()) {
-            throw new ProcessFailedException($process);
-        }
-
         // Look for running instance of URL proxy in `docker ps` output.
-        if (!strpos($process->getOutput(), 'jwilder/nginx-proxy')) {
+        if (!$process->isSuccessful()) {
             // If there's no running instance, offer to create one
             $helper = $this->getHelper('question');
             $question = new ConfirmationQuestion("URL proxy is not running, would you like to enable it now? [Y/n] ", true);
             if (!$helper->ask($input, $output, $question)) {
                 $output->writeln('<error>Cancelled</error>');
             } else {
-                $output->writeln('Starting URL proxy...');
-                $command = $this->getApplication()->find('url-proxy:enable');
-                $proxyInput = new StringInput('url-proxy:enable');
+                $output->writeln('Running command `terra prepare:system...');
+                $command = $this->getApplication()->find('prepare:system');
+                $proxyInput = new StringInput('prepare:system');
                 $command->run($proxyInput, $output);
             }
         }

@@ -1,0 +1,41 @@
+language: php
+php:
+  - '5.5'  # Ubuntu Trusty default
+  - '5.6'  # MacOS default
+  - '7.0'
+  - '7.1'
+  
+services:
+  - docker
+
+install:
+  - composer install
+  - sudo ln -s $PWD/bin/terra /usr/local/bin/terra
+  - sudo ln -s $PWD/vendor/drush/drush/drush /usr/local/bin/drush
+  - ls -la
+  - echo "StrictHostKeyChecking no" >> ~/.ssh/config
+  - ssh-keygen -t rsa -N "" -f $HOME/.ssh/id_rsa
+  - ls -la ~/.ssh
+
+script:
+  - terra
+  - drush
+  - terra prepare:system -y
+  - docker logs terra-nginx-proxy
+  - bin/terra app:add drupal http://github.com/terra-ops/example-drupal.git --description='sample app' --host=local.computer -n
+  - bin/terra e:a drupal demo demo -n
+  - cat ~/.terra/environments/drupal/drupal-demo/docker-compose.yml
+
+  - bin/terra e:e drupal demo
+  - bin/terra status
+  - cd ~/.terra/environments/drupal/drupal-demo/
+  - docker-compose logs
+  - PORT=`docker inspect --format '{{ (index (index .NetworkSettings.Ports "80/tcp") 0).HostPort }}' drupaldemo_app_1`
+  - echo $PORT
+  - URL="http://localhost:$PORT"
+  - echo $URL
+  - curl $URL
+  - docker-compose exec app drush site-install -y
+  - curl $URL
+  - docker-compose exec app drush status
+  - docker-compose exec app drush uli
